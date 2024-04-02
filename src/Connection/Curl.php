@@ -1,10 +1,10 @@
 <?php
 
-namespace LaraGram\Laraquest;
+namespace LaraGram\Laraquest\Connection;
 
 use CurlHandle;
 
-class Connection
+class Curl
 {
     private CurlHandle $curl;
     private string $url;
@@ -20,9 +20,9 @@ class Connection
         $this->curl = curl_init();
     }
 
-    private function set_url(): void
+    private function set_url(string $methode): void
     {
-        $this->url = $this->api_server . 'bot' . $this->token . "/";
+        $this->url = $this->api_server . 'bot' . $this->token . "/" . $methode;
     }
 
     private function set_option(): void
@@ -52,8 +52,7 @@ class Connection
     public function endpoint(string $methode, array $content, bool $post = true): bool|string
     {
         $this->init();
-        $this->set_url();
-        $this->url = $this->url . $methode;
+        $this->set_url($methode);
         $this->content = $content;
         $this->post = $post;
         $this->set_option();

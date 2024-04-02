@@ -1,0 +1,19 @@
+{
+    "name": "laraxgram/laraquest",
+    "description": "Sending requests and receiving Telegram updates.",
+    "type": "library",
+    "license": "GPL-3.0",
+    "autoload": {
+        "psr-4": {
+            "Laraxgram\\Laraquest\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "laraXgram",
+            "email": "laraxgram@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

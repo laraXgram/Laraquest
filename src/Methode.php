@@ -2,6 +2,11 @@
 
 namespace LaraGram\Laraquest;
 
+use LaraGram\Laraquest\Connection\AMP;
+use LaraGram\Laraquest\Connection\Curl;
+use LaraGram\Laraquest\Connection\NoResponseCurl;
+use mysql_xdevapi\Exception;
+
 /**
  * show off @method
  *
@@ -81,7 +86,7 @@ namespace LaraGram\Laraquest;
  * @method getMyName() getMyName($language_code = null)
  * @method setMyDescription() setMyDescription($description = null, $language_code = null)
  * @method getMyDescription() getMyDescription($language_code = null)
- * @method setMyShortDescription() setMyShortDescription($short_description	 = null, $language_code = null)
+ * @method setMyShortDescription() setMyShortDescription($short_description = null, $language_code = null)
  * @method getMyShortDescription() getMyShortDescription($language_code = null)
  * @method setChatMenuButton() setChatMenuButton($chat_id = null, $menu_button = null)
  * @method getChatMenuButton() getChatMenuButton($chat_id = null)
@@ -114,19 +119,35 @@ namespace LaraGram\Laraquest;
  * @method deleteStickerSet() deleteStickerSet($name)
  * @method answerInlineQuery() answerInlineQuery($inline_query_id, $results, $cache_time = null, $is_personal = null, $next_offset = null, $button = null)
  * @method answerWebAppQuery() answerWebAppQuery($web_app_query_id, $result)
- * @method sendInvoice() sendInvoice($chat_id, $title, $description , $payload, $provider_token, $currency, $price, $message_thread_id = null, $max_tip_amount = null, $suggested_tip_amounts = null, $start_parameter = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null)
- * @method createInvoiceLink() createInvoiceLink($title, $description , $payload, $provider_token, $currency, $price, $max_tip_amount = null, $suggested_tip_amounts = null, $start_parameter = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null)
+ * @method sendInvoice() sendInvoice($chat_id, $title, $description, $payload, $provider_token, $currency, $price, $message_thread_id = null, $max_tip_amount = null, $suggested_tip_amounts = null, $start_parameter = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null)
+ * @method createInvoiceLink() createInvoiceLink($title, $description, $payload, $provider_token, $currency, $price, $max_tip_amount = null, $suggested_tip_amounts = null, $start_parameter = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null)
  * @method answerShippingQuery() answerShippingQuery($shipping_query_id, $ok, $shipping_options = null, $error_message = null)
  * @method answerPreCheckoutQuery() answerPreCheckoutQuery($pre_checkout_query_id, $ok, $error_message = null)
  * @method setPassportDataErrors() setPassportDataErrors($user_id, $errors)
  * @method sendGame() sendGame($chat_id, $game_short_name, $message_thread_id = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id = null)
  * @method setGameScore() setGameScore($user_id, $score, $chat_id = null, $message_id = null, $inline_message_id = null, $disable_edit_message = null, $force = null)
- * @method getGameHighScores() getGameHighScores($user_id,$chat_id = null, $message_id = null, $inline_message_id = null )
+ * @method getGameHighScores() getGameHighScores($user_id, $chat_id = null, $message_id = null, $inline_message_id = null)
  */
-class Methode extends Connection
+class Methode
 {
+    private $mode = 32;
+
+    public function mode(Mode $mode): static
+    {
+        $this->mode = $mode->value;
+        return $this;
+    }
+
     function __call($method, $params)
     {
-        return $this->endpoint($method, [...$params]);
+        if ($this->mode == 32) {
+            return (new Curl($_ENV['BOT_TOKEN'], $_ENV['API_SERVER']))->endpoint($method, [...$params]);
+        } elseif ($this->mode = 64) {
+            return (new NoResponseCurl($_ENV['BOT_TOKEN'], $_ENV['API_SERVER']))->endpoint($method, [...$params]);
+        } elseif ($this->mode = 128) {
+            return (new AMP($_ENV['BOT_TOKEN'], $_ENV['API_SERVER']))->endpoint($method, [...$params]);
+        } elseif ($this->mode = 256) {
+            throw new Exception('mode OPENSWOOLE not exist yet!');
+        }
     }
 }
