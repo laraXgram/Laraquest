@@ -5,7 +5,7 @@ namespace LaraGram\Laraquest;
 use LaraGram\Laraquest\Connection\AMP;
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
-use mysql_xdevapi\Exception;
+use Exception;
 
 /**
  * show off @method
