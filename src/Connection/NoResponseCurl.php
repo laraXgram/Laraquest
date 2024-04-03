@@ -18,7 +18,11 @@ class NoResponseCurl
 
     private function set_url(string $methode): void
     {
-        $this->url = $this->api_server . 'bot' . $this->token . "/" . $methode;
+        if (str_ends_with($this->api_server, '/' )){
+            $this->url = $this->api_server . 'bot' . $this->token . "/" . $methode;
+        }else{
+            $this->url = $this->api_server . '/bot' . $this->token . "/" . $methode;
+        }
     }
 
     public function set_option()

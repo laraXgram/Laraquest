@@ -22,7 +22,11 @@ class Curl
 
     private function set_url(string $methode): void
     {
-        $this->url = $this->api_server . 'bot' . $this->token . "/" . $methode;
+        if (str_ends_with($this->api_server, '/' )){
+            $this->url = $this->api_server . 'bot' . $this->token . "/" . $methode;
+        }else{
+            $this->url = $this->api_server . '/bot' . $this->token . "/" . $methode;
+        }
     }
 
     private function set_option(): void
@@ -49,7 +53,7 @@ class Curl
         curl_close($this->curl);
     }
 
-    public function endpoint(string $methode, array $content, bool $post = true): bool|string
+    public function endpoint(string $methode, array $content, bool $post = true): bool|array
     {
         $this->init();
         $this->set_url($methode);
@@ -66,7 +70,7 @@ class Curl
                 'message' => curl_error($this->curl)
             ]);
         }
-        return $result;
+        return json_decode($result, true);
     }
 }
 
