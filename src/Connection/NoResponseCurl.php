@@ -4,7 +4,6 @@ namespace LaraGram\Laraquest\Connection;
 
 class NoResponseCurl
 {
-
     private string $url;
     private bool $post;
     private array|null $content;

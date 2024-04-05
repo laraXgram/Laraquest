@@ -5,6 +5,8 @@ namespace LaraGram\Laraquest;
 use LaraGram\Laraquest\Connection\AMP;
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
+use LaraGram\Errors\Log;
+use LaraGram\Errors\Level;
 
 trait Methode
 {
@@ -22,6 +24,12 @@ trait Methode
             return !is_null($value);
         });
 
+        foreach ($params as $key => $value){
+            if (gettype($value) == 'object'){
+                $params[$key] = json_encode($value);
+            }
+        }
+
         if ($this->mode == 32) {
             return (new Curl($_ENV['BOT_TOKEN'], $_ENV['BOT_API_SERVER']))->endpoint($method, $params);
         } elseif ($this->mode = 64) {
@@ -29,7 +37,7 @@ trait Methode
         } elseif ($this->mode = 128) {
             return (new AMP($_ENV['BOT_TOKEN'], $_ENV['BOT_API_SERVER']))->endpoint($method, $params);
         } elseif ($this->mode = 256) {
-//            throw new Exception('mode OPENSWOOLE not exist yet!');
+            Log::set('laragram', Level::Error, 'The OPENSWOOLE mode does not exist at this time');
         }
     }
 

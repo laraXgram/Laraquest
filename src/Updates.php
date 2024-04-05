@@ -44,4 +44,11 @@ use LaraGram\Laraquest\Updates\ShippingQuery;
  * @property ChatBoostUpdated $chat_boost
  * @property ChatBoostRemoved $removed_chat_boost
  */
-trait Updates { }
+
+trait Updates {
+    public function __get($name)
+    {
+        $data = json_decode(file_get_contents("php://input"));
+        return $data->{$name};
+    }
+}
