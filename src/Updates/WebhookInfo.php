@@ -2,50 +2,16 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class WebhookInfo
-{
-    public static function url(): string
-    {
+/**
+ * @property string $url
+ * @property bool $has_custom_certificate
+ * @property int $pending_update_count
+ * @property string $ip_address
+ * @property int $last_error_date
+ * @property string $last_error_message
+ * @property int $last_synchronization_error_date
+ * @property int $max_connections
+ * @property array $allowed_updates
 
-    }
-
-    public static function has_custom_certificate(): bool
-    {
-
-    }
-
-    public static function pending_update_count(): int
-    {
-
-    }
-
-    public static function ip_address(): string
-    {
-
-    }
-
-    public static function last_error_date(): int
-    {
-
-    }
-
-    public static function last_error_message(): string
-    {
-
-    }
-
-    public static function last_synchronization_error_date(): string
-    {
-
-    }
-
-    public static function max_connections(): int
-    {
-
-    }
-
-    public static function allowed_updates(): array
-    {
-
-    }
-}
+ **/
+trait WebhookInfo { }

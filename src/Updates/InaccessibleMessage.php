@@ -2,20 +2,10 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class InaccessibleMessage
-{
-    public static function chat(): Chat
-    {
+/**
+ * @property Chat $chat
+ * @property int $message_id
+ * @property int $date
 
-    }
-
-    public static function message_id(): int
-    {
-
-    }
-
-    public static function date(): int
-    {
-
-    }
-}
+ **/
+trait InaccessibleMessage { }

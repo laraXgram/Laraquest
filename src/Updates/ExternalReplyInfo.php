@@ -2,120 +2,30 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class ExternalReplyInfo
-{
-    public static function origin(): MessageOriginUser|MessageOriginHiddenUser|MessageOriginChat|MessageOriginChannel
-    {
+/**
+ * @property MessageOrigin $origin
+ * @property Chat $chat
+ * @property int $message_id
+ * @property LinkPreviewOptions $link_preview_options
+ * @property Animation $animation
+ * @property Audio $audio
+ * @property Document $document
+ * @property array $photo
+ * @property Sticker $sticker
+ * @property Story $story
+ * @property Video $video
+ * @property VideoNote $video_note
+ * @property Voice $voice
+ * @property True $has_media_spoiler
+ * @property Contact $contact
+ * @property Dice $dice
+ * @property Game $game
+ * @property Giveaway $giveaway
+ * @property GiveawayWinners $giveaway_winners
+ * @property Invoice $invoice
+ * @property Location $location
+ * @property Poll $poll
+ * @property Venue $venue
 
-    }
-
-    public static function chat(): Chat
-    {
-
-    }
-
-    public static function message_id(): int
-    {
-
-    }
-
-    public static function link_preview_options(): LinkPreviewOptions
-    {
-
-    }
-
-    public static function animation(): Animation
-    {
-
-    }
-
-    public static function audio(): Audio
-    {
-
-    }
-
-    public static function document(): Document
-    {
-
-    }
-
-    public static function photo(): array
-    {
-
-    }
-
-    public static function sticker(): Sticker
-    {
-
-    }
-
-    public static function story(): Story
-    {
-
-    }
-
-    public static function video(): Video
-    {
-
-    }
-
-    public static function video_note(): VideoNote
-    {
-
-    }
-
-    public static function voice(): Voice
-    {
-
-    }
-
-    public static function has_media_spoiler(): true
-    {
-
-    }
-
-    public static function contact(): Contact
-    {
-
-    }
-
-    public static function dice(): Dice
-    {
-
-    }
-
-    public static function game(): Game
-    {
-
-    }
-
-    public static function giveaway(): Giveaway
-    {
-
-    }
-
-    public static function giveaway_winners(): GiveawayWinners
-    {
-
-    }
-
-    public static function invoice(): Invoice
-    {
-
-    }
-
-    public static function location(): Location
-    {
-
-    }
-
-    public static function poll(): Poll
-    {
-
-    }
-
-    public static function venue(): Venue
-    {
-
-    }
-}
+ **/
+trait ExternalReplyInfo { }

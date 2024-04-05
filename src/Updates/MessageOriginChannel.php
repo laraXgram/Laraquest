@@ -2,30 +2,12 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class MessageOriginChannel
-{
-    public static function type(): string
-    {
+/**
+ * @property string $type
+ * @property int $date
+ * @property Chat $chat
+ * @property int $message_id
+ * @property string $author_signature
 
-    }
-
-    public static function date(): int
-    {
-
-    }
-
-    public static function chat(): Chat
-    {
-
-    }
-
-    public static function message_id(): int
-    {
-
-    }
-
-    public static function author_signature(): string
-    {
-
-    }
-}
+ **/
+trait MessageOriginChannel { }

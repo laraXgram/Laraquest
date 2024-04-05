@@ -2,25 +2,11 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class MessageOriginChat
-{
-    public static function type(): string
-    {
+/**
+ * @property string $type
+ * @property int $date
+ * @property Chat $sender_chat
+ * @property string $author_signature
 
-    }
-
-    public static function date(): int
-    {
-
-    }
-
-    public static function sender_chat(): Chat
-    {
-
-    }
-
-    public static function author_signature(): string
-    {
-
-    }
-}
+ **/
+trait MessageOriginChat { }

@@ -2,41 +2,14 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class ReplyParameters
+/**
+ * @property int $message_id
+ * @property int|string $chat_id
+ * @property bool $allow_sending_without_reply
+ * @property string $quote
+ * @property string $quote_parse_mode
+ * @property array $quote_entities
+ * @property int $quote_position
 
-{
-    public static function message_id(): int
-    {
-
-    }
-
-    public static function chat_id(): int|string
-    {
-
-    }
-
-    public static function allow_sending_without_reply(): bool
-    {
-
-    }
-
-    public static function quote(): string
-    {
-
-    }
-
-    public static function quote_parse_mode(): string
-    {
-
-    }
-
-    public static function quote_entities(): array
-    {
-
-    }
-
-    public static function quote_position(): int
-    {
-
-    }
-}
+ **/
+trait ReplyParameters { }

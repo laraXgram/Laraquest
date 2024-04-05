@@ -4,5 +4,5 @@ namespace LaraGram\Laraquest;
 
 final class Bot
 {
-    use Methode, Update;
+    use Methode, Updates;
 }

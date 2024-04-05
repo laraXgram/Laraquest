@@ -2,20 +2,10 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class MessageOriginUser
-{
-    public static function type(): string
-    {
+/**
+ * @property string $type
+ * @property int $date
+ * @property User $sender_user
 
-    }
-
-    public static function date(): int
-    {
-
-    }
-
-    public static function sender_user(): User
-    {
-
-    }
-}
+ **/
+trait MessageOriginUser { }

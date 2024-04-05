@@ -2,20 +2,10 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class MessageOriginHiddenUser
-{
-    public static function type(): string
-    {
+/**
+ * @property string $type
+ * @property int $date
+ * @property string $sender_user_name
 
-    }
-
-    public static function date(): int
-    {
-
-    }
-
-    public static function sender_user_name(): string
-    {
-
-    }
-}
+ **/
+trait MessageOriginHiddenUser { }

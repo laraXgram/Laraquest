@@ -2,26 +2,11 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-class TextQuote
-{
-    public static function text(): string
-    {
+/**
+ * @property string $text
+ * @property array $entities
+ * @property int $position
+ * @property True $is_manual
 
-    }
-
-    public static function entities(): array
-    {
-
-    }
-
-    public static function position(): int
-    {
-
-    }
-
-    public static function is_manual(): true
-    {
-
-    }
-
-}
+ **/
+trait TextQuote { }
