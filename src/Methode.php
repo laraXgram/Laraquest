@@ -6,7 +6,7 @@ use LaraGram\Laraquest\Connection\AMP;
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
 
-class Methode
+trait Methode
 {
     private int|Mode $mode = 32;
 
