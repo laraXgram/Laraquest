@@ -26,7 +26,12 @@ class NoResponseCurl
 
     public function set_option()
     {
-        $http_methode = 'POST' ? $this->post : $http_methode = 'GET';
+        if ($this->post) {
+            $http_methode = 'POST';
+        } else{
+            $http_methode = 'GET';
+        }
+
         $this->command = "curl --parallel --parallel-immediate --parallel-max 100 --tcp-fastopen --tcp-nodelay -X {$http_methode} -H 'Content-type: application/json' -d " . escapeshellarg(json_encode($this->content)) . " '{$this->url}' -o /dev/null >> /dev/null 2>&1 &";
     }
 

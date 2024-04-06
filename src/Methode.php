@@ -5,8 +5,8 @@ namespace LaraGram\Laraquest;
 use LaraGram\Laraquest\Connection\AMP;
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
-use LaraGram\Errors\Log;
-use LaraGram\Errors\Level;
+use LaraGram\Core\Cli\Error\Log;
+use LaraGram\Core\Cli\Error\Level;
 
 trait Methode
 {

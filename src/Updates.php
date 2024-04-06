@@ -48,7 +48,11 @@ use LaraGram\Laraquest\Updates\ShippingQuery;
 trait Updates {
     public function __get($name)
     {
-        $data = json_decode(file_get_contents("php://input"));
+//        $data = json_decode(file_get_contents("php://input"));
+//        return $data->{$name};
+        // TODO: add 2 Mode
+        global $datas;
+        $data = json_decode($datas['argv'][1]);
         return $data->{$name};
     }
 }
