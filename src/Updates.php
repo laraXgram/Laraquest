@@ -2,6 +2,7 @@
 
 namespace LaraGram\Laraquest;
 
+use LaraGram\Core\Bootstrap\Bootstrap;
 use LaraGram\Laraquest\Updates\BusinessConnection;
 use LaraGram\Laraquest\Updates\BusinessMessagesDeleted;
 use LaraGram\Laraquest\Updates\CallbackQuery;
@@ -44,15 +45,82 @@ use LaraGram\Laraquest\Updates\ShippingQuery;
  * @property ChatBoostUpdated $chat_boost
  * @property ChatBoostRemoved $removed_chat_boost
  */
-
-trait Updates {
+trait Updates
+{
     public function __get($name)
     {
-//        $data = json_decode(file_get_contents("php://input"));
-//        return $data->{$name};
-        // TODO: add 2 Mode
-        global $datas;
-        $data = json_decode($datas['argv'][1]);
+        if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'global'){
+            global $datas;
+            $data = json_decode($datas['argv'][1]);
+        }else if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'sync'){
+            $data = json_decode(file_get_contents('php://input'));
+        }
+
         return $data->{$name};
+    }
+
+    public function getData()
+    {
+        return json_decode(file_get_contents('php://input'));
+    }
+
+    public function getUpdateType(): false|string
+    {
+        if (isset($this->inline_query)) {
+            return 'inline_query';
+        }
+        if (isset($this->callback_query)) {
+            return 'callback_query';
+        }
+        if (isset($this->edited_message)) {
+            return 'edited_message';
+        }
+        if (isset($this->message->text)) {
+            return 'message';
+        }
+        if (isset($this->message->photo)) {
+            return 'photo';
+        }
+        if (isset($this->message->video)) {
+            return 'video';
+        }
+        if (isset($this->message->audio)) {
+            return 'audio';
+        }
+        if (isset($this->message->voice)) {
+            return 'voice';
+        }
+        if (isset($this->message->contact)) {
+            return 'contact';
+        }
+        if (isset($this->message->location)) {
+            return 'location';
+        }
+        if (isset($this->message->reply_to_message)) {
+            return 'reply_to_message';
+        }
+        if (isset($this->message->animation)) {
+            return 'animation';
+        }
+        if (isset($this->message->sticker)) {
+            return 'sticker';
+        }
+        if (isset($this->message->document)) {
+            return 'document';
+        }
+        if (isset($this->message->new_chat_members)) {
+            return 'new_chat_members';
+        }
+        if (isset($this->message->left_chat_member)) {
+            return 'left_chat_member';
+        }
+        if (isset($this->my_chat_member)) {
+            return 'my_chat_member';
+        }
+        if (isset($this->channel_post)) {
+            return 'channel_post';
+        }
+
+        return false;
     }
 }
