@@ -49,10 +49,15 @@ trait Updates
 {
     public function __get($name)
     {
-        if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'global'){
-            global $datas;
-            $data = json_decode($datas['argv'][1]);
-        }else if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'sync'){
+        if (class_exists(Bootstrap::class)) {
+
+            if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'global') {
+                global $datas;
+                $data = json_decode($datas['argv'][1]);
+            } else if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'sync') {
+                $data = json_decode(file_get_contents('php://input'));
+            }
+        } else {
             $data = json_decode(file_get_contents('php://input'));
         }
 
@@ -61,7 +66,16 @@ trait Updates
 
     public function getData()
     {
-        return json_decode(file_get_contents('php://input'));
+        if (class_exists(Bootstrap::class)) {
+            if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'global') {
+                global $datas;
+                return json_decode($datas['argv'][1]);
+            } else if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'sync') {
+                return json_decode(file_get_contents('php://input'));
+            }
+        } else {
+            return json_decode(file_get_contents('php://input'));
+        }
     }
 
     public function getUpdateType(): false|string
