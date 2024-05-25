@@ -2,7 +2,6 @@
 
 namespace LaraGram\Laraquest;
 
-use LaraGram\Core\Bootstrap\Bootstrap;
 use LaraGram\Laraquest\Updates\BusinessConnection;
 use LaraGram\Laraquest\Updates\BusinessMessagesDeleted;
 use LaraGram\Laraquest\Updates\CallbackQuery;
@@ -49,31 +48,22 @@ trait Updates
 {
     public function __get($name)
     {
-        if (class_exists(Bootstrap::class)) {
-
-            if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'global') {
-                global $datas;
-                $data = json_decode($datas['argv'][1]);
-            } else if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'sync') {
-                $data = json_decode(file_get_contents('php://input'));
-            }
-        } else {
+        if (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'global') {
+            global $datas;
+            $data = json_decode($datas['argv'][1]);
+        } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
             $data = json_decode(file_get_contents('php://input'));
         }
 
-        return $data->{$name};
+        return ($data->{$name}) ?? null;
     }
 
     public function getData()
     {
-        if (class_exists(Bootstrap::class)) {
-            if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'global') {
-                global $datas;
-                return json_decode($datas['argv'][1]);
-            } else if (Bootstrap::$_CONFIG['laraquest']['UPDATE_TYPE'] == 'sync') {
-                return json_decode(file_get_contents('php://input'));
-            }
-        } else {
+        if (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'global') {
+            global $datas;
+            return json_decode($datas['argv'][1]);
+        } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
             return json_decode(file_get_contents('php://input'));
         }
     }
