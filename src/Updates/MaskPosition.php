@@ -4,9 +4,9 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property string $point
- * @property Float $x_shift
- * @property Float $y_shift
- * @property Float $scale
+ * @property float $x_shift
+ * @property float $y_shift
+ * @property float $scale
 
- **/
-trait MaskPosition { }
+**/
+class MaskPosition { }

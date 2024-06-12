@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $expiration_date
  * @property ChatBoostSource $source
 
- **/
-trait ChatBoost { }
+**/
+class ChatBoost { }

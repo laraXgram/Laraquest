@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $file_hash
  * @property string $message
 
- **/
-trait PassportElementErrorSelfie { }
+**/
+class PassportElementErrorSelfie { }

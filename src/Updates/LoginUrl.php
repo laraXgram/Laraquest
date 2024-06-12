@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $bot_username
  * @property bool $request_write_access
 
- **/
-trait LoginUrl { }
+**/
+class LoginUrl { }

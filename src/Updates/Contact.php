@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $user_id
  * @property string $vcard
 
- **/
-trait Contact { }
+**/
+class Contact { }

@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $telegram_payment_charge_id
  * @property string $provider_payment_charge_id
 
- **/
-trait SuccessfulPayment { }
+**/
+class SuccessfulPayment { }

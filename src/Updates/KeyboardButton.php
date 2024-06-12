@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property KeyboardButtonPollType $request_poll
  * @property WebAppInfo $web_app
 
- **/
-trait KeyboardButton { }
+**/
+class KeyboardButton { }

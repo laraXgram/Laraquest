@@ -23,5 +23,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $can_manage_topics
  * @property string $custom_title
 
- **/
-trait ChatMemberAdministrator { }
+**/
+class ChatMemberAdministrator { }

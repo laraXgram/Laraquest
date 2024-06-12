@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $data
  * @property string $game_short_name
 
- **/
-trait CallbackQuery { }
+**/
+class CallbackQuery { }

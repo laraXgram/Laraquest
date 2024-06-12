@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $last_name
  * @property string $vcard
 
- **/
-trait InputContactMessageContent { }
+**/
+class InputContactMessageContent { }

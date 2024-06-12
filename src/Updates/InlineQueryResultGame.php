@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $game_short_name
  * @property InlineKeyboardMarkup $reply_markup
 
- **/
-trait InlineQueryResultGame { }
+**/
+class InlineQueryResultGame { }

@@ -6,5 +6,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $type
  * @property string $emoji
 
- **/
-trait ReactionType { }
+**/
+class ReactionType { }

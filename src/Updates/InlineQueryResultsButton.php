@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property WebAppInfo $web_app
  * @property string $start_parameter
 
- **/
-trait InlineQueryResultsButton { }
+**/
+class InlineQueryResultsButton { }

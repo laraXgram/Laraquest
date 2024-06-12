@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $request_username
  * @property bool $request_photo
 
- **/
-trait KeyboardButtonRequestUsers { }
+**/
+class KeyboardButtonRequestUsers { }

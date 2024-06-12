@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $web_app_name
  * @property bool $from_attachment_menu
 
- **/
-trait WriteAccessAllowed { }
+**/
+class WriteAccessAllowed { }

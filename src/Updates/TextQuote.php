@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $position
  * @property True $is_manual
 
- **/
-trait TextQuote { }
+**/
+class TextQuote { }

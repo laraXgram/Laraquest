@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $is_anonymous
  * @property string $custom_title
 
- **/
-trait ChatMember { }
+**/
+class ChatMember { }

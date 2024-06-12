@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $month
  * @property int $year
 
- **/
-trait Birthdate { }
+**/
+class Birthdate { }

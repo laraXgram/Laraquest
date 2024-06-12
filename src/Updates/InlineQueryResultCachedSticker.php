@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property InlineKeyboardMarkup $reply_markup
  * @property InputMessageContent $input_message_content
 
- **/
-trait InlineQueryResultCachedSticker { }
+**/
+class InlineQueryResultCachedSticker { }

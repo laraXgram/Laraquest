@@ -5,5 +5,5 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property int $duration
 
- **/
-trait VideoChatStarted { }
+**/
+class VideoChatStarted { }

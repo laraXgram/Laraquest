@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $date
  * @property array $reactions
 
- **/
-trait MessageReactionCountUpdated { }
+**/
+class MessageReactionCountUpdated { }

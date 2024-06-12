@@ -16,5 +16,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $supports_inline_queries
  * @property bool $can_connect_to_business
 
- **/
-trait User { }
+**/
+class User { }

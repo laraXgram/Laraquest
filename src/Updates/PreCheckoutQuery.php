@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $shipping_option_id
  * @property OrderInfo $order_info
 
- **/
-trait PreCheckoutQuery { }
+**/
+class PreCheckoutQuery { }

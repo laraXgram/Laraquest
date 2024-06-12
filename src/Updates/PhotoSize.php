@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $height
  * @property int $file_size
 
- **/
-trait PhotoSize { }
+**/
+class PhotoSize { }

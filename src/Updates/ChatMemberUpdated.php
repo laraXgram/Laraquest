@@ -9,7 +9,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property ChatMember $old_chat_member
  * @property ChatMember $new_chat_member
  * @property ChatInviteLink $invite_link
+ * @property bool $via_join_request
  * @property bool $via_chat_folder_invite_link
 
- **/
-trait ChatMemberUpdated { }
+**/
+class ChatMemberUpdated { }

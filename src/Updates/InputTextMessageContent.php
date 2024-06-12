@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $entities
  * @property LinkPreviewOptions $link_preview_options
 
- **/
-trait InputTextMessageContent { }
+**/
+class InputTextMessageContent { }

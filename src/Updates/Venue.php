@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $google_place_id
  * @property string $google_place_type
 
- **/
-trait Venue { }
+**/
+class Venue { }

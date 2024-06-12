@@ -22,5 +22,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $can_manage_topics
  * @property int $until_date
 
- **/
-trait ChatMemberRestricted { }
+**/
+class ChatMemberRestricted { }

@@ -28,6 +28,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $text
  * @property array $entities
  * @property LinkPreviewOptions $link_preview_options
+ * @property string $effect_id
  * @property Animation $animation
  * @property Audio $audio
  * @property Document $document
@@ -39,6 +40,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property Voice $voice
  * @property string $caption
  * @property array $caption_entities
+ * @property True $show_caption_above_media
  * @property True $has_media_spoiler
  * @property Contact $contact
  * @property Dice $dice
@@ -67,6 +69,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property PassportData $passport_data
  * @property ProximityAlertTriggered $proximity_alert_triggered
  * @property ChatBoostAdded $boost_added
+ * @property ChatBackground $chat_background_set
  * @property ForumTopicCreated $forum_topic_created
  * @property ForumTopicEdited $forum_topic_edited
  * @property ForumTopicClosed $forum_topic_closed
@@ -84,5 +87,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property WebAppData $web_app_data
  * @property InlineKeyboardMarkup $reply_markup
 
- **/
-trait Message { }
+**/
+class Message { }

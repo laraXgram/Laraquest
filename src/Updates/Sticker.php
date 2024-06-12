@@ -19,5 +19,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property True $needs_repainting
  * @property int $file_size
 
- **/
-trait Sticker { }
+**/
+class Sticker { }

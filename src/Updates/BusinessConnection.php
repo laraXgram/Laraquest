@@ -10,5 +10,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $can_reply
  * @property bool $is_enabled
 
- **/
-trait BusinessConnection { }
+**/
+class BusinessConnection { }

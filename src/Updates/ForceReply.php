@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $input_field_placeholder
  * @property bool $selective
 
- **/
-trait ForceReply { }
+**/
+class ForceReply { }

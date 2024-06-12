@@ -24,5 +24,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $send_email_to_provider
  * @property bool $is_flexible
 
- **/
-trait InputInvoiceMessageContent { }
+**/
+class InputInvoiceMessageContent { }

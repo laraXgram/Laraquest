@@ -10,5 +10,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property PhotoSize $thumbnail
  * @property int $file_size
 
- **/
-trait VideoNote { }
+**/
+class VideoNote { }

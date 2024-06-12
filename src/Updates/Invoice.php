@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $currency
  * @property int $total_amount
 
- **/
-trait Invoice { }
+**/
+class Invoice { }

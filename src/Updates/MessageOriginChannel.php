@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $message_id
  * @property string $author_signature
 
- **/
-trait MessageOriginChannel { }
+**/
+class MessageOriginChannel { }

@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $message
  * @property Sticker $sticker
 
- **/
-trait BusinessIntro { }
+**/
+class BusinessIntro { }

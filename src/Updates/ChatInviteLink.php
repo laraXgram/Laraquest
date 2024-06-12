@@ -13,5 +13,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $member_limit
  * @property int $pending_join_request_count
 
- **/
-trait ChatInviteLink { }
+**/
+class ChatInviteLink { }

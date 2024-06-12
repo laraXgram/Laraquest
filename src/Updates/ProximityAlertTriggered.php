@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $watcher
  * @property int $distance
 
- **/
-trait ProximityAlertTriggered { }
+**/
+class ProximityAlertTriggered { }

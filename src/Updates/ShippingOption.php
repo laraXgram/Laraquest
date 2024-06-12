@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $title
  * @property array $prices
 
- **/
-trait ShippingOption { }
+**/
+class ShippingOption { }

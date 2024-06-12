@@ -5,5 +5,5 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property string $type
 
- **/
-trait BotCommandScopeAllGroupChats { }
+**/
+class BotCommandScopeAllGroupChats { }

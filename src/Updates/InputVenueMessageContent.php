@@ -3,8 +3,8 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property Float $latitude
- * @property Float $longitude
+ * @property float $latitude
+ * @property float $longitude
  * @property string $title
  * @property string $address
  * @property string $foursquare_id
@@ -12,5 +12,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $google_place_id
  * @property string $google_place_type
 
- **/
-trait InputVenueMessageContent { }
+**/
+class InputVenueMessageContent { }

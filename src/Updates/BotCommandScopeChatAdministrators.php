@@ -4,7 +4,7 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property string $type
- * @property int|string $chat_id
+ * @property Integer|String $chat_id
 
- **/
-trait BotCommandScopeChatAdministrators { }
+**/
+class BotCommandScopeChatAdministrators { }

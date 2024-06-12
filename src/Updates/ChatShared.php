@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $username
  * @property array $photo
 
- **/
-trait ChatShared { }
+**/
+class ChatShared { }

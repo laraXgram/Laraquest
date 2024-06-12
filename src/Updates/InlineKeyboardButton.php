@@ -14,5 +14,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property CallbackGame $callback_game
  * @property bool $pay
 
- **/
-trait InlineKeyboardButton { }
+**/
+class InlineKeyboardButton { }

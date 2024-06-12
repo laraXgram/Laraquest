@@ -15,5 +15,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property True $was_refunded
  * @property string $prize_description
 
- **/
-trait GiveawayWinners { }
+**/
+class GiveawayWinners { }

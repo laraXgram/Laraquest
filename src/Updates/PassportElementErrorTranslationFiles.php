@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $file_hashes
  * @property string $message
 
- **/
-trait PassportElementErrorTranslationFiles { }
+**/
+class PassportElementErrorTranslationFiles { }

@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property Chat $sender_chat
  * @property string $author_signature
 
- **/
-trait MessageOriginChat { }
+**/
+class MessageOriginChat { }

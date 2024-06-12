@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $old_reaction
  * @property array $new_reaction
 
- **/
-trait MessageReactionUpdated { }
+**/
+class MessageReactionUpdated { }

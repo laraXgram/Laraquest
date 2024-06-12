@@ -10,5 +10,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $bio
  * @property ChatInviteLink $invite_link
 
- **/
-trait ChatJoinRequest { }
+**/
+class ChatJoinRequest { }

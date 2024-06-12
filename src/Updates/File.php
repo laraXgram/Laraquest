@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $file_size
  * @property string $file_path
 
- **/
-trait File { }
+**/
+class File { }

@@ -10,5 +10,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $chat_type
  * @property Location $location
 
- **/
-trait InlineQuery { }
+**/
+class InlineQuery { }

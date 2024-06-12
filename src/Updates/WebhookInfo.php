@@ -13,5 +13,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $max_connections
  * @property array $allowed_updates
 
- **/
-trait WebhookInfo { }
+**/
+class WebhookInfo { }

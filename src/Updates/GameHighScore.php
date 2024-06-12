@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $user
  * @property int $score
 
- **/
-trait GameHighScore { }
+**/
+class GameHighScore { }

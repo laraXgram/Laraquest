@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $user
  * @property array $option_ids
 
- **/
-trait PollAnswer { }
+**/
+class PollAnswer { }

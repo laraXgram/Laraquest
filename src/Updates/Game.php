@@ -10,5 +10,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $text_entities
  * @property Animation $animation
 
- **/
-trait Game { }
+**/
+class Game { }

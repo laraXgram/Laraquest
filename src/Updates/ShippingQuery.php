@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $invoice_payload
  * @property ShippingAddress $shipping_address
 
- **/
-trait ShippingQuery { }
+**/
+class ShippingQuery { }

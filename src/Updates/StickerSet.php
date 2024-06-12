@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $stickers
  * @property PhotoSize $thumbnail
 
- **/
-trait StickerSet { }
+**/
+class StickerSet { }

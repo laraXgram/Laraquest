@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $email
  * @property ShippingAddress $shipping_address
 
- **/
-trait OrderInfo { }
+**/
+class OrderInfo { }

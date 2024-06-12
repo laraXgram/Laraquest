@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $remove_date
  * @property ChatBoostSource $source
 
- **/
-trait ChatBoostRemoved { }
+**/
+class ChatBoostRemoved { }

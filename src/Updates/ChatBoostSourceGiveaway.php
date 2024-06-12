@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $user
  * @property True $is_unclaimed
 
- **/
-trait ChatBoostSourceGiveaway { }
+**/
+class ChatBoostSourceGiveaway { }

@@ -27,5 +27,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property Poll $poll
  * @property Venue $venue
 
- **/
-trait ExternalReplyInfo { }
+**/
+class ExternalReplyInfo { }

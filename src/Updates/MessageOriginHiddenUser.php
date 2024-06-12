@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $date
  * @property string $sender_user_name
 
- **/
-trait MessageOriginHiddenUser { }
+**/
+class MessageOriginHiddenUser { }

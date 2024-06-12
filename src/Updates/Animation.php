@@ -13,5 +13,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $mime_type
  * @property int $file_size
 
- **/
-trait Animation { }
+**/
+class Animation { }

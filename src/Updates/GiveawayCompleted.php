@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $unclaimed_prize_count
  * @property Message $giveaway_message
 
- **/
-trait GiveawayCompleted { }
+**/
+class GiveawayCompleted { }

@@ -13,5 +13,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $file_size
  * @property PhotoSize $thumbnail
 
- **/
-trait Audio { }
+**/
+class Audio { }

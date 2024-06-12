@@ -15,5 +15,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $thumbnail_width
  * @property int $thumbnail_height
 
- **/
-trait InlineQueryResultArticle { }
+**/
+class InlineQueryResultArticle { }

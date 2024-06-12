@@ -14,5 +14,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $translation
  * @property string $hash
 
- **/
-trait EncryptedPassportElement { }
+**/
+class EncryptedPassportElement { }

@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $date
  * @property User $sender_user
 
- **/
-trait MessageOriginUser { }
+**/
+class MessageOriginUser { }

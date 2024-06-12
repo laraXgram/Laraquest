@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $inline_message_id
  * @property string $query
 
- **/
-trait ChosenInlineResult { }
+**/
+class ChosenInlineResult { }

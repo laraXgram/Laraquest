@@ -10,5 +10,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $street_line2
  * @property string $post_code
 
- **/
-trait ShippingAddress { }
+**/
+class ShippingAddress { }

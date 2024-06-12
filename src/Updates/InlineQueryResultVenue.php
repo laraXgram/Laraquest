@@ -5,8 +5,8 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property string $type
  * @property string $id
- * @property Float $latitude
- * @property Float $longitude
+ * @property float $latitude
+ * @property float $longitude
  * @property string $title
  * @property string $address
  * @property string $foursquare_id
@@ -19,5 +19,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $thumbnail_width
  * @property int $thumbnail_height
 
- **/
-trait InlineQueryResultVenue { }
+**/
+class InlineQueryResultVenue { }

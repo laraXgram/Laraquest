@@ -5,5 +5,5 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property int $message_auto_delete_time
 
- **/
-trait MessageAutoDeleteTimerChanged { }
+**/
+class MessageAutoDeleteTimerChanged { }

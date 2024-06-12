@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $prefer_large_media
  * @property bool $show_above_text
 
- **/
-trait LinkPreviewOptions { }
+**/
+class LinkPreviewOptions { }

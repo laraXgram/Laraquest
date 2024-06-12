@@ -12,5 +12,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property array $country_codes
  * @property int $premium_subscription_month_count
 
- **/
-trait Giveaway { }
+**/
+class Giveaway { }

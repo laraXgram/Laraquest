@@ -8,5 +8,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $file_size
  * @property int $file_date
 
- **/
-trait PassportFile { }
+**/
+class PassportFile { }

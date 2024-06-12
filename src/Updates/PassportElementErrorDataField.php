@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $data_hash
  * @property string $message
 
- **/
-trait PassportElementErrorDataField { }
+**/
+class PassportElementErrorDataField { }

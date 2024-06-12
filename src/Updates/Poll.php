@@ -5,6 +5,7 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property string $id
  * @property string $question
+ * @property array $question_entities
  * @property array $options
  * @property int $total_voter_count
  * @property bool $is_closed
@@ -17,5 +18,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $open_period
  * @property int $close_date
 
- **/
-trait Poll { }
+**/
+class Poll { }

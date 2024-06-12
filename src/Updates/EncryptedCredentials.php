@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $hash
  * @property string $secret
 
- **/
-trait EncryptedCredentials { }
+**/
+class EncryptedCredentials { }

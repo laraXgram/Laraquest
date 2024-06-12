@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $language
  * @property string $custom_emoji_id
 
- **/
-trait MaybeInaccessibleMessage { }
+**/
+class MaybeInaccessibleMessage { }

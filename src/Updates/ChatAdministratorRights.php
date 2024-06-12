@@ -19,5 +19,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $can_pin_messages
  * @property bool $can_manage_topics
 
- **/
-trait ChatAdministratorRights { }
+**/
+class ChatAdministratorRights { }

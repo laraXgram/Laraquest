@@ -8,7 +8,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $caption
  * @property string $parse_mode
  * @property array $caption_entities
+ * @property bool $show_caption_above_media
  * @property bool $has_spoiler
 
- **/
-trait InputMedia { }
+**/
+class InputMedia { }

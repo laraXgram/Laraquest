@@ -9,5 +9,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $allow_group_chats
  * @property bool $allow_channel_chats
 
- **/
-trait SwitchInlineQueryChosenChat { }
+**/
+class SwitchInlineQueryChosenChat { }

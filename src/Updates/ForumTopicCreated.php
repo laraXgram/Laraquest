@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $icon_color
  * @property string $icon_custom_emoji_id
 
- **/
-trait ForumTopicCreated { }
+**/
+class ForumTopicCreated { }

@@ -7,5 +7,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $message_id
  * @property int $date
 
- **/
-trait InaccessibleMessage { }
+**/
+class InaccessibleMessage { }

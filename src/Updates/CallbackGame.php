@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $message_id
  * @property string $inline_message_id
 
- **/
-trait CallbackGame { }
+**/
+class CallbackGame { }
