@@ -7,16 +7,20 @@ use LaraGram\Laraquest\Connection\NoResponseCurl;
 
 trait Methode
 {
-    private int|Mode $mode = 32;
+    private int|Mode $mode = 0;
 
     public function mode(Mode $mode): static
     {
-        $this->mode = ($mode->value) ?? $mode;
+        $this->mode = $mode->value ?? $mode;
         return $this;
     }
 
     private function endpoint($method, $params)
     {
+        if ($this->mode == 0){
+            $this->mode = $_ENV['DEFAULT_MODE'] ?? 32;
+        }
+
         $params= array_filter($params, function($value) {
             return !is_null($value);
         });
