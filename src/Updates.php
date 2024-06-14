@@ -49,20 +49,20 @@ trait Updates
     public function __get($name)
     {
         if (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'global') {
-            global $datas;
-            $data = json_decode($datas['argv'][1]);
+            global $data;
+            $update = json_decode($data['argv'][1]);
         } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
-            $data = json_decode(file_get_contents('php://input'));
+            $update = json_decode(file_get_contents('php://input'));
         }
 
-        return ($data->{$name}) ?? null;
+        return ($update->{$name}) ?? null;
     }
 
     public function getData()
     {
         if (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'global') {
-            global $datas;
-            return json_decode($datas['argv'][1]);
+            global $data;
+            return json_decode($data['argv'][1]);
         } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
             return json_decode(file_get_contents('php://input'));
         }

@@ -17,16 +17,18 @@ trait Methode
 
     private function endpoint($method, $params): bool|array|string
     {
-        if ($this->mode == 0){
-            $this->mode = $_ENV['DEFAULT_MODE'] ?? 32;
-        }
+        $this->mode = match ($_ENV['DEFAULT_MODE']) {
+            'curl' => 32,
+            'global' => 64,
+            default => 32
+        };
 
-        $params= array_filter($params, function($value) {
+        $params = array_filter($params, function ($value) {
             return !is_null($value);
         });
 
-        foreach ($params as $key => $value){
-            if (gettype($value) == 'object'){
+        foreach ($params as $key => $value) {
+            if (gettype($value) == 'object') {
                 $params[$key] = json_encode($value);
             }
         }
