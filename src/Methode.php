@@ -137,6 +137,11 @@ trait Methode
         return $this->endpoint('sendVideoNote', get_defined_vars());
     }
 
+    public function sendPaidMedia($chat_id, $star_count, $media, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null): bool|array|string|null
+    {
+        return $this->endpoint('sendPaidMedia', get_defined_vars());
+    }
+
     public function sendMediaGroup($chat_id, $media, $message_thread_id = null, $reply_parameters = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
     {
         return $this->endpoint('sendMediaGroup', get_defined_vars());
@@ -472,37 +477,37 @@ trait Methode
         return $this->endpoint('getMyDefaultAdministratorRights', get_defined_vars());
     }
 
-    public function editMessageText($text, $chat_id = null, $message_id = null, $inline_message_id = null, $parse_mode = null, $entities = null, $link_preview_options = null, $reply_markup = null): bool|string|array|null
+    public function editMessageText($text, $chat_id = null, $message_id = null, $inline_message_id = null, $parse_mode = null, $entities = null, $link_preview_options = null, $reply_markup = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('editMessageText', get_defined_vars());
     }
 
-    public function editMessageCaption($chat_id = null, $message_id = null, $inline_message_id = null, $caption = null, $parse_mode = null, $caption_entities = null, $reply_markup = null, $show_caption_above_media = null): bool|string|array|null
+    public function editMessageCaption($chat_id = null, $message_id = null, $inline_message_id = null, $caption = null, $parse_mode = null, $caption_entities = null, $reply_markup = null, $show_caption_above_media = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('editMessageCaption', get_defined_vars());
     }
 
-    public function editMessageMedia($media, $chat_id = null, $message_id = null, $inline_message_id = null, $reply_markup = null): bool|string|array|null
+    public function editMessageMedia($media, $chat_id = null, $message_id = null, $inline_message_id = null, $reply_markup = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('editMessageMedia', get_defined_vars());
     }
 
-    public function editMessageLiveLocation($latitude, $longitude, $chat_id = null, $message_id = null, $inline_message_id = null, $horizontal_accuracy = null, $heading = null, $proximity_alert_radius = null, $reply_markup = null, $live_period = null): bool|string|array|null
+    public function editMessageLiveLocation($latitude, $longitude, $chat_id = null, $message_id = null, $inline_message_id = null, $horizontal_accuracy = null, $heading = null, $proximity_alert_radius = null, $reply_markup = null, $live_period = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('editMessageLiveLocation', get_defined_vars());
     }
 
-    public function stopMessageLiveLocation($chat_id = null, $message_id = null, $inline_message_id = null, $reply_markup = null): bool|string|array|null
+    public function stopMessageLiveLocation($chat_id = null, $message_id = null, $inline_message_id = null, $reply_markup = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('stopMessageLiveLocation', get_defined_vars());
     }
 
-    public function editMessageReplyMarkup($chat_id = null, $message_id = null, $inline_message_id = null, $reply_markup = null): bool|string|array|null
+    public function editMessageReplyMarkup($chat_id = null, $message_id = null, $inline_message_id = null, $reply_markup = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('editMessageReplyMarkup', get_defined_vars());
     }
 
-    public function stopPoll($chat_id, $message_id, $reply_markup = null): bool|string|array|null
+    public function stopPoll($chat_id, $message_id, $reply_markup = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('stopPoll', get_defined_vars());
     }
@@ -625,6 +630,11 @@ trait Methode
     public function answerPreCheckoutQuery($pre_checkout_query_id, $ok, $error_message = null): bool|string|array|null
     {
         return $this->endpoint('answerPreCheckoutQuery', get_defined_vars());
+    }
+
+    public function getStarTransactions($offset = null, $limit = null): bool|string|array|null
+    {
+        return $this->endpoint('getStarTransactions', get_defined_vars());
     }
 
     public function refundStarPayment($user_id, $telegram_payment_charge_id): bool|string|array|null
