@@ -34,6 +34,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $invite_link
  * @property Message $pinned_message
  * @property ChatPermissions $permissions
+ * @property True $can_send_paid_media
  * @property int $slow_mode_delay
  * @property int $unrestrict_boost_count
  * @property int $message_auto_delete_time

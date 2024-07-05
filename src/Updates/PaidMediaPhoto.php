@@ -4,7 +4,7 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property string $type
- * @property string $media
+ * @property array $photo
 
 **/
-class InputFile { }
+class PaidMediaPhoto { }

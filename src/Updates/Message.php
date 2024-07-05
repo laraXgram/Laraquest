@@ -32,6 +32,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property Animation $animation
  * @property Audio $audio
  * @property Document $document
+ * @property PaidMediaInfo $paid_media
  * @property array $photo
  * @property Sticker $sticker
  * @property Story $story

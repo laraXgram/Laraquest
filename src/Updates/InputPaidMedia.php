@@ -7,4 +7,4 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $media
 
 **/
-class InputFile { }
+class InputPaidMedia { }

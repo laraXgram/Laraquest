@@ -3,6 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
+ * @property string $business_connection_id
  * @property Integer|String $chat_id
  * @property int $message_id
  * @property string $inline_message_id

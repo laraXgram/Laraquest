@@ -4,7 +4,7 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property string $type
- * @property string $media
+ * @property Video $video
 
 **/
-class InputFile { }
+class PaidMediaVideo { }
