@@ -4,12 +4,13 @@ namespace LaraGram\Laraquest;
 
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
+use LaraGram\Support\Facades\Request;
 
 trait Methode
 {
     private int|Mode $mode = 0;
 
-    public function mode(Mode $mode): static
+    public function mode(Mode|int $mode): static
     {
         $this->mode = $mode->value ?? $mode;
         return $this;
@@ -17,11 +18,13 @@ trait Methode
 
     private function endpoint($method, $params): bool|array|string
     {
-        $this->mode = match ($_ENV['DEFAULT_MODE']) {
-            'curl' => 32,
-            'global' => 64,
-            default => 32
-        };
+        if ($this->mode == 0){
+            $this->mode = match ($_ENV['DEFAULT_MODE']) {
+                'curl' => 32,
+                'no_response_curl' => 64,
+                default => 32
+            };
+        }
 
         $params = array_filter($params, function ($value) {
             return !is_null($value);
