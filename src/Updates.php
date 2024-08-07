@@ -53,6 +53,9 @@ trait Updates
             $update = json_decode($data['argv'][1]);
         } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
             $update = json_decode(file_get_contents('php://input'));
+        } elseif (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'openswoole') {
+            global $swoole;
+            $update = $swoole;
         }
 
         return ($update->{$name}) ?? null;
