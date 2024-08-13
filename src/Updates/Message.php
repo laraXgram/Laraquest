@@ -63,6 +63,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property MaybeInaccessibleMessage $pinned_message
  * @property Invoice $invoice
  * @property SuccessfulPayment $successful_payment
+ * @property RefundedPayment $refunded_payment
  * @property UsersShared $users_shared
  * @property ChatShared $chat_shared
  * @property string $connected_website
@@ -87,6 +88,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property VideoChatParticipantsInvited $video_chat_participants_invited
  * @property WebAppData $web_app_data
  * @property InlineKeyboardMarkup $reply_markup
-
-**/
+ **/
 class Message { }

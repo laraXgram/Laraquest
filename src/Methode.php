@@ -285,12 +285,12 @@ trait Methode
         return $this->endpoint('setChatDescription', get_defined_vars());
     }
 
-    public function pinChatMessage($chat_id, $message_id, $disable_notification = null): bool|string|array|null
+    public function pinChatMessage($chat_id, $message_id, $disable_notification = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('pinChatMessage', get_defined_vars());
     }
 
-    public function unpinChatMessage($chat_id, $message_id): bool|string|array|null
+    public function unpinChatMessage($chat_id, $message_id, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('unpinChatMessage', get_defined_vars());
     }

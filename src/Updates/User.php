@@ -15,6 +15,6 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $can_read_all_group_messages
  * @property bool $supports_inline_queries
  * @property bool $can_connect_to_business
-
-**/
+ * @property bool $has_main_web_app
+ **/
 class User { }
