@@ -140,7 +140,7 @@ trait Methode
         return $this->endpoint('sendVideoNote', get_defined_vars());
     }
 
-    public function sendPaidMedia($chat_id, $star_count, $media, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null): bool|array|string|null
+    public function sendPaidMedia($chat_id, $star_count, $media, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id  = null): bool|array|string|null
     {
         return $this->endpoint('sendPaidMedia', get_defined_vars());
     }
@@ -663,5 +663,15 @@ trait Methode
     public function getGameHighScores($user_id, $chat_id = null, $message_id = null, $inline_message_id = null): bool|string|array|null
     {
         return $this->endpoint('getGameHighScores', get_defined_vars());
+    }
+
+    public function createChatSubscriptionInviteLink($chat_id, $subscription_period, $subscription_price, $name = null): bool|string|array|null
+    {
+        return $this->endpoint('createChatSubscriptionInviteLink', get_defined_vars());
+    }
+
+    public function editChatSubscriptionInviteLink($chat_id, $invite_link, $name = null): bool|string|array|null
+    {
+        return $this->endpoint('editChatSubscriptionInviteLink', get_defined_vars());
     }
 }
