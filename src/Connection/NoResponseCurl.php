@@ -32,7 +32,11 @@ class NoResponseCurl
             $http_methode = 'GET';
         }
 
-        $this->command = "curl --parallel --parallel-immediate --parallel-max 100 --tcp-fastopen --tcp-nodelay -X {$http_methode} -H 'Content-type: application/json' -d " . escapeshellarg(json_encode($this->content)) . " '{$this->url}' -o /dev/null >> /dev/null 2>&1 &";
+        if (version_compare(curl_version()['version'], "7.66.0", '>=')){
+            $this->command = "curl --parallel --parallel-immediate --parallel-max 100 --tcp-fastopen --tcp-nodelay -X {$http_methode} -H 'Content-type: application/json' -d " . escapeshellarg(json_encode($this->content)) . " '{$this->url}' -o /dev/null >> /dev/null 2>&1 &";
+        }else{
+            $this->command = "curl --tcp-fastopen --tcp-nodelay -X {$http_methode} -H 'Content-type: application/json' -d " . escapeshellarg(json_encode($this->content)) . " '{$this->url}' -o /dev/null >> /dev/null 2>&1 &";
+        }
     }
 
     private function execute(): bool|string
