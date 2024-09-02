@@ -75,6 +75,11 @@ trait Updates
         }
     }
 
+    /**
+     * This function returns the type of the update.
+     * @return false|string
+     * @throws InvalidUpdateType
+     */
     public function getUpdateType(): false|string
     {
         $update = $this->getData();
@@ -89,6 +94,12 @@ trait Updates
         };
     }
 
+    /**
+     * This function returns the type of the message.
+     * @param object $message
+     * @return string
+     * @throws InvalidUpdateType
+     */
     private function getUpdateMessageSubType(object $message): string
     {
         return match (true) {
