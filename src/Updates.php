@@ -18,6 +18,7 @@ use LaraGram\Laraquest\Updates\Poll;
 use LaraGram\Laraquest\Updates\PollAnswer;
 use LaraGram\Laraquest\Updates\PreCheckoutQuery;
 use LaraGram\Laraquest\Updates\ShippingQuery;
+use LaraGram\Exceptions\InvalidUpdateType;
 
 /**
  * @property int $update_id
@@ -76,61 +77,35 @@ trait Updates
 
     public function getUpdateType(): false|string
     {
-        if (isset($this->inline_query)) {
-            return 'inline_query';
-        }
-        if (isset($this->callback_query)) {
-            return 'callback_query';
-        }
-        if (isset($this->edited_message)) {
-            return 'edited_message';
-        }
-        if (isset($this->message->text)) {
-            return 'message';
-        }
-        if (isset($this->message->photo)) {
-            return 'photo';
-        }
-        if (isset($this->message->video)) {
-            return 'video';
-        }
-        if (isset($this->message->audio)) {
-            return 'audio';
-        }
-        if (isset($this->message->voice)) {
-            return 'voice';
-        }
-        if (isset($this->message->contact)) {
-            return 'contact';
-        }
-        if (isset($this->message->location)) {
-            return 'location';
-        }
-        if (isset($this->message->reply_to_message)) {
-            return 'reply_to_message';
-        }
-        if (isset($this->message->animation)) {
-            return 'animation';
-        }
-        if (isset($this->message->sticker)) {
-            return 'sticker';
-        }
-        if (isset($this->message->document)) {
-            return 'document';
-        }
-        if (isset($this->message->new_chat_members)) {
-            return 'new_chat_members';
-        }
-        if (isset($this->message->left_chat_member)) {
-            return 'left_chat_member';
-        }
-        if (isset($this->my_chat_member)) {
-            return 'my_chat_member';
-        }
-        if (isset($this->channel_post)) {
-            return 'channel_post';
-        }
+        $update = $this->getData();
+        return match (true) {
+            isset($update->inline_query) => 'inline_query',
+            isset($update->callback_query) => 'callback_query',
+            isset($update->edited_message) => 'edited_message',
+            isset($update->message) => $this->getUpdateMessageSubType($update->message),
+            isset($update->my_chat_member) => 'my_chat_member',
+            isset($update->channel_post) => 'channel_post',
+            default => false
+        };
+    }
 
-        return false;
+    private function getUpdateMessageSubType(object $message): string
+    {
+        return match (true) {
+            isset($message->text) => 'message',
+            isset($message->photo) => 'photo',
+            isset($message->video) => 'video',
+            isset($message->audio) => 'audio',
+            isset($message->voice) => 'voice',
+            isset($message->contact) => 'contact',
+            isset($message->location) => 'location',
+            isset($message->reply_to_message) => 'reply_to_message',
+            isset($message->animation) => 'animation',
+            isset($message->sticker) => 'sticker',
+            isset($message->document) => 'document',
+            isset($message->new_chat_members) => 'new_chat_members',
+            isset($message->left_chat_member) => 'left_chat_member',
+            default => throw new InvalidUpdateType('Unknown message type')
+        };
     }
 }
