@@ -60,7 +60,7 @@ trait Updates
             $update = json_decode($data['argv'][1]);
         } elseif ($update_type == 'sync' || !isset($update_type)) {
             $update = json_decode(file_get_contents('php://input'));
-        } elseif ($update_type == 'openswoole') {
+        } elseif ($update_type == 'openswoole' || $update_type == 'swoole') {
             global $swoole;
             $update = $swoole;
         }
@@ -81,7 +81,7 @@ trait Updates
             return json_decode($data['argv'][1]);
         } elseif ($update_type == 'sync' || !isset($update_type)) {
             return json_decode(file_get_contents('php://input'));
-        } elseif ($update_type == 'openswoole') {
+        } elseif ($update_type == 'openswoole' || $update_type == 'swoole') {
             global $swoole;
             return $swoole;
         }
