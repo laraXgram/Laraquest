@@ -49,12 +49,18 @@ trait Updates
 {
     public function __get($name)
     {
-        if (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'global') {
+        if (class_exists("LaraGram\\Config\\Repository")){
+            $update_type = config()->get('bot.UPDATE_TYPE');
+        }else{
+            $update_type = $_ENV['UPDATE_TYPE'];
+        }
+
+        if (isset($update_type) && $update_type == 'global') {
             global $data;
             $update = json_decode($data['argv'][1]);
-        } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
+        } elseif ($update_type == 'sync' || !isset($update_type)) {
             $update = json_decode(file_get_contents('php://input'));
-        } elseif (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'openswoole') {
+        } elseif ($update_type == 'openswoole') {
             global $swoole;
             $update = $swoole;
         }
@@ -64,15 +70,23 @@ trait Updates
 
     public function getData()
     {
-        if (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'global') {
+        if (class_exists("LaraGram\\Config\\Repository")){
+            $update_type = config()->get('bot.UPDATE_TYPE');
+        }else{
+            $update_type = $_ENV['UPDATE_TYPE'];
+        }
+
+        if (isset($update_type) && $update_type == 'global') {
             global $data;
             return json_decode($data['argv'][1]);
-        } elseif ((isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'sync') || !isset($_ENV['UPDATE_TYPE'])) {
+        } elseif ($update_type == 'sync' || !isset($update_type)) {
             return json_decode(file_get_contents('php://input'));
-        } elseif (isset($_ENV['UPDATE_TYPE']) && $_ENV['UPDATE_TYPE'] == 'openswoole') {
+        } elseif ($update_type == 'openswoole') {
             global $swoole;
             return $swoole;
         }
+
+        return false;
     }
 
     /**

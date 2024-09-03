@@ -4,7 +4,6 @@ namespace LaraGram\Laraquest;
 
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
-use LaraGram\Support\Facades\Request;
 
 trait Methode
 {
@@ -18,8 +17,18 @@ trait Methode
 
     private function endpoint($method, $params): bool|array|string
     {
+        if (class_exists("LaraGram\\Config\\Repository")){
+            $update_type = config()->get('bot.UPDATE_TYPE');
+            $token = config()->get('bot.BOT_TOKEN');
+            $api_server = config()->get('bot.BOT_API_SERVER');
+        }else{
+            $update_type = $_ENV['UPDATE_TYPE'];
+            $token = $_ENV['BOT_TOKEN'];
+            $api_server = $_ENV['BOT_API_SERVER'];
+        }
+
         if ($this->mode == 0){
-            $this->mode = match ($_ENV['DEFAULT_MODE']) {
+            $this->mode = match ($update_type) {
                 'curl' => 32,
                 'no_response_curl' => 64,
                 default => 32
@@ -37,9 +46,9 @@ trait Methode
         }
 
         if ($this->mode == 32) {
-            return (new Curl($_ENV['BOT_TOKEN'], $_ENV['BOT_API_SERVER']))->endpoint($method, $params);
+            return (new Curl($token, $api_server))->endpoint($method, $params);
         } elseif ($this->mode = 64) {
-            return (new NoResponseCurl($_ENV['BOT_TOKEN'], $_ENV['BOT_API_SERVER']))->endpoint($method, $params);
+            return (new NoResponseCurl($token, $api_server))->endpoint($method, $params);
         }
 
         return false;
