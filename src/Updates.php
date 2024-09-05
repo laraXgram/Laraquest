@@ -47,32 +47,55 @@ use LaraGram\Exceptions\InvalidUpdateType;
  */
 trait Updates
 {
+    private string $update_type;
+
+    public function __construct()
+    {
+        if (class_exists("LaraGram\\Config\\Repository")) {
+            $this->update_type = config()->get('bot.UPDATE_TYPE');
+        } else {
+            $this->update_type = $_ENV['UPDATE_TYPE'];
+        }
+    }
     public function __get($name)
     {
-        if (class_exists("LaraGram\\Config\\Repository")){
-            $update_type = config()->get('bot.UPDATE_TYPE');
-        }else{
-            $update_type = $_ENV['UPDATE_TYPE'];
-        }
-
-        if (isset($update_type) && $update_type == 'global') {
+        if (isset($this->update_type) && $this->update_type == 'global') {
             global $data;
             $update = json_decode($data['argv'][1]);
-        } elseif ($update_type == 'sync' || !isset($update_type)) {
+        } elseif ($this->update_type == 'sync' || !isset($this->update_type)) {
             $update = json_decode(file_get_contents('php://input'));
-        } elseif ($update_type == 'openswoole' || $update_type == 'swoole') {
+        } elseif ($this->update_type == 'openswoole' || $this->update_type == 'swoole') {
             global $swoole;
             $update = $swoole;
+        } elseif ($this->update_type == 'polling') {
+            global $data;
+            $update = $data;
         }
 
         return ($update->{$name}) ?? null;
     }
 
+    public static function polling(callable $callback): void
+    {
+        $lastUpdateId = null;
+        $polling = new Polling();
+        while (true){
+            $updates = $polling->getUpdates($lastUpdateId + 1, timeout: 100)['result'];
+            foreach ($updates as $update){
+                $lastUpdateId = $update['update_id'];
+                global $data;
+                $data = json_decode(json_encode($update));
+                $callback($polling);
+            }
+            sleep(0.5);
+        }
+    }
+
     public function getData()
     {
-        if (class_exists("LaraGram\\Config\\Repository")){
+        if (class_exists("LaraGram\\Config\\Repository")) {
             $update_type = config()->get('bot.UPDATE_TYPE');
-        }else{
+        } else {
             $update_type = $_ENV['UPDATE_TYPE'];
         }
 
@@ -84,6 +107,9 @@ trait Updates
         } elseif ($update_type == 'openswoole' || $update_type == 'swoole') {
             global $swoole;
             return $swoole;
+        } elseif ($this->update_type == 'polling') {
+            global $data;
+            return $data;
         }
 
         return false;
