@@ -78,7 +78,7 @@ trait Updates
     public static function polling(callable $callback): void
     {
         $lastUpdateId = null;
-        $polling = new Polling();
+        $polling = new Laraquest();
         while (true){
             $updates = $polling->getUpdates($lastUpdateId + 1, timeout: 100)['result'];
             foreach ($updates as $update){

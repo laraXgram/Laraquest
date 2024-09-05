@@ -2,7 +2,7 @@
 
 namespace LaraGram\Laraquest;
 
-class Polling
+class Laraquest
 {
     use Methode, Updates;
 }
