@@ -149,7 +149,7 @@ trait Methode
         return $this->endpoint('sendVideoNote', get_defined_vars());
     }
 
-    public function sendPaidMedia($chat_id, $star_count, $media, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id  = null): bool|array|string|null
+    public function sendPaidMedia($chat_id, $star_count, $media, $payload = null, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id  = null): bool|array|string|null
     {
         return $this->endpoint('sendPaidMedia', get_defined_vars());
     }

@@ -2,6 +2,8 @@
 
 namespace LaraGram\Laraquest;
 
+use LaraGram\Laraquest\Exceptions\InvalidGetUpdateType;
+use LaraGram\Laraquest\Exceptions\InvalidUpdateType;
 use LaraGram\Laraquest\Updates\BusinessConnection;
 use LaraGram\Laraquest\Updates\BusinessMessagesDeleted;
 use LaraGram\Laraquest\Updates\CallbackQuery;
@@ -14,12 +16,11 @@ use LaraGram\Laraquest\Updates\InlineQuery;
 use LaraGram\Laraquest\Updates\Message;
 use LaraGram\Laraquest\Updates\MessageReactionCountUpdated;
 use LaraGram\Laraquest\Updates\MessageReactionUpdated;
+use LaraGram\Laraquest\Updates\PaidMediaPurchased;
 use LaraGram\Laraquest\Updates\Poll;
 use LaraGram\Laraquest\Updates\PollAnswer;
 use LaraGram\Laraquest\Updates\PreCheckoutQuery;
 use LaraGram\Laraquest\Updates\ShippingQuery;
-use LaraGram\Exceptions\InvalidUpdateType;
-
 /**
  * @property int $update_id
  * @property Message $message
@@ -44,75 +45,77 @@ use LaraGram\Exceptions\InvalidUpdateType;
  * @property ChatJoinRequest $chat_join_request
  * @property ChatBoostUpdated $chat_boost
  * @property ChatBoostRemoved $removed_chat_boost
+ * @property PaidMediaPurchased $purchased_paid_media
  */
 trait Updates
 {
     private string $update_type;
+    private float $polling_sleep_time;
+    private int $polling_timeout;
 
     public function __construct()
     {
-        if (class_exists("LaraGram\\Config\\Repository")) {
-            $this->update_type = config()->get('bot.UPDATE_TYPE');
-        } else {
-            $this->update_type = $_ENV['UPDATE_TYPE'];
-        }
+        $getConfigValue = function ($key, $default, $file) {
+            return class_exists("LaraGram\\Config\\Repository")
+                ? config()->get("$file.$key") ?? $default
+                : ($_ENV[$key] ?? $default);
+        };
+
+        $this->update_type = $getConfigValue('UPDATE_TYPE', 'sync', 'bot');
+        $this->polling_sleep_time = $getConfigValue('POLLING_SLEEP_TIME', 0.5, 'bot');
+        $this->polling_timeout = $getConfigValue('POLLING_TIMEOUT', 100, 'bot');
     }
     public function __get($name)
     {
-        if (isset($this->update_type) && $this->update_type == 'global') {
-            global $data;
-            $update = json_decode($data['argv'][1]);
-        } elseif ($this->update_type == 'sync' || !isset($this->update_type)) {
-            $update = json_decode(file_get_contents('php://input'));
-        } elseif ($this->update_type == 'openswoole' || $this->update_type == 'swoole') {
-            global $swoole;
-            $update = $swoole;
-        } elseif ($this->update_type == 'polling') {
-            global $data;
-            $update = $data;
-        }
+        global $data;
+        global $swoole;
+        $update = match ($this->update_type){
+            'sync' => json_decode(file_get_contents('php://input')),
+            'global' => json_decode($data['argv'][1]),
+            'openswoole', 'swoole' => $swoole,
+            'polling' => $data,
+            default => throw new InvalidGetUpdateType("Unknown get update type")
+        };
 
         return ($update->{$name}) ?? null;
     }
 
     public static function polling(callable $callback): void
     {
+        global $data;
+
         $lastUpdateId = null;
         $polling = new Laraquest();
-        while (true){
-            $updates = $polling->getUpdates($lastUpdateId + 1, timeout: 100)['result'];
-            foreach ($updates as $update){
-                $lastUpdateId = $update['update_id'];
-                global $data;
-                $data = json_decode(json_encode($update));
-                $callback($polling);
+
+        try {
+            while (true){
+                $updates = $polling->getUpdates($lastUpdateId + 1, timeout: $polling->polling_timeout)['result'];
+
+                foreach ($updates as $update){
+                    $lastUpdateId = $update['update_id'];
+                    $data = json_decode(json_encode($update));
+
+                    $callback($polling);
+                }
+
+                sleep($polling->polling_sleep_time);
             }
-            sleep(0.5);
+        } catch (\Exception $exception){
+            file_put_contents('laraquest.log', $exception->getMessage() . PHP_EOL, FILE_APPEND);
         }
     }
 
     public function getData()
     {
-        if (class_exists("LaraGram\\Config\\Repository")) {
-            $update_type = config()->get('bot.UPDATE_TYPE');
-        } else {
-            $update_type = $_ENV['UPDATE_TYPE'];
-        }
-
-        if (isset($update_type) && $update_type == 'global') {
-            global $data;
-            return json_decode($data['argv'][1]);
-        } elseif ($update_type == 'sync' || !isset($update_type)) {
-            return json_decode(file_get_contents('php://input'));
-        } elseif ($update_type == 'openswoole' || $update_type == 'swoole') {
-            global $swoole;
-            return $swoole;
-        } elseif ($this->update_type == 'polling') {
-            global $data;
-            return $data;
-        }
-
-        return false;
+        global $data;
+        global $swoole;
+        return match ($this->update_type){
+            'sync' => json_decode(file_get_contents('php://input')),
+            'global' => json_decode($data['argv'][1]),
+            'openswoole', 'swoole' => $swoole,
+            'polling' => $data,
+            default => throw new InvalidGetUpdateType("Unknown get update type")
+        };
     }
 
     /**

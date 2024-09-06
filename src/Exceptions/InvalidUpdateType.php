@@ -1,6 +1,6 @@
 <?php 
 
-namespace LaraGram\Exceptions;
+namespace LaraGram\Laraquest\Exceptions;
 
 use Throwable;
 use UnexpectedValueException;

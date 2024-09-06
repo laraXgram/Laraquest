@@ -9,6 +9,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property True $only_new_members
  * @property True $has_public_winners
  * @property string $prize_description
+ * @property int $prize_star_count
  * @property array $country_codes
  * @property int $premium_subscription_month_count
 

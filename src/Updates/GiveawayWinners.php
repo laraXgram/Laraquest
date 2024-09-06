@@ -9,6 +9,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $winner_count
  * @property array $winners
  * @property int $additional_chat_count
+ * @property int $prize_star_count
  * @property int $premium_subscription_month_count
  * @property int $unclaimed_prize_count
  * @property True $only_new_members

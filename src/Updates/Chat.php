@@ -11,5 +11,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $last_name
  * @property True $is_forum
 
-**/
+ **/
 class Chat { }
