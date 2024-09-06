@@ -46,3 +46,15 @@ class MyBotClass {
 $bot = new MyBotClass();
 $bot->sendMessage($bot->message->chat->id, 'hello!');
 ```
+
+
+### Long Polling
+```php
+Laraquest::polling(function(){
+    // ...
+});
+
+Laraquest::polling(function(Laraquest $request){
+    // ...
+});
+```
