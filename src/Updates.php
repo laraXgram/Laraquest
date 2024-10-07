@@ -52,6 +52,8 @@ trait Updates
     private string $update_type;
     private float $polling_sleep_time;
     private int $polling_timeout;
+    private int $polling_limit;
+    private array $polling_allowed_updates;
 
     public function __construct()
     {
@@ -61,9 +63,12 @@ trait Updates
                 : ($_ENV[$key] ?? $default);
         };
 
-        $this->update_type = $getConfigValue('UPDATE_TYPE', 'sync', 'bot');
-        $this->polling_sleep_time = $getConfigValue('POLLING_SLEEP_TIME', 0.5, 'bot');
-        $this->polling_timeout = $getConfigValue('POLLING_TIMEOUT', 100, 'bot');
+        $this->update_type = $getConfigValue('update_type', 'sync', 'laraquest');
+        $this->polling_sleep_time = $getConfigValue('sleep_interval', 0.5, 'laraquest.polling');
+        $this->polling_timeout = $getConfigValue('timeout', 100, 'laraquest.polling');
+        $this->polling_limit = $getConfigValue('limit', 100, 'laraquest.polling');
+        $allowed_updates = $getConfigValue('allow_updates', ["*"], 'laraquest.polling');
+        $this->polling_allowed_updates = $allowed_updates === ["*"] ? null : $allowed_updates;
     }
     public function __get($name)
     {
@@ -89,7 +94,10 @@ trait Updates
 
         try {
             while (true){
-                $updates = $polling->getUpdates($lastUpdateId + 1, timeout: $polling->polling_timeout)['result'];
+                $updates = $polling->getUpdates(
+                    $lastUpdateId + 1, $polling->polling_limit,
+                    $polling->polling_timeout, $polling->polling_allowed_updates
+                )['result'];
 
                 foreach ($updates as $update){
                     $lastUpdateId = $update['update_id'];
