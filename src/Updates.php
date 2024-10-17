@@ -151,7 +151,7 @@ trait Updates
      * @return string
      * @throws InvalidUpdateType
      */
-    private function getUpdateMessageSubType(object $message): string
+    public function getUpdateMessageSubType(object $message): string
     {
         return match (true) {
             isset($message->text) => 'message',
