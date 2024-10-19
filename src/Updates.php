@@ -53,13 +53,13 @@ trait Updates
     private float $polling_sleep_time;
     private int $polling_timeout;
     private int $polling_limit;
-    private array $polling_allowed_updates;
+    private array|null $polling_allowed_updates;
 
     public function __construct()
     {
         $getConfigValue = function ($key, $default, $file) {
             return class_exists("LaraGram\\Config\\Repository")
-                ? config()->get("$file.$key") ?? $default
+                ? config("$file.$key") ?? $default
                 : ($_ENV[$key] ?? $default);
         };
 
