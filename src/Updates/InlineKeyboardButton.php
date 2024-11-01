@@ -11,6 +11,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $switch_inline_query
  * @property string $switch_inline_query_current_chat
  * @property SwitchInlineQueryChosenChat $switch_inline_query_chosen_chat
+ * @property CopyTextButton $copy_text
  * @property CallbackGame $callback_game
  * @property bool $pay
 

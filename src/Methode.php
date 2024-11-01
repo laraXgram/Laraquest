@@ -17,17 +17,17 @@ trait Methode
 
     private function endpoint($method, $params): bool|array|string
     {
-        if (class_exists("LaraGram\\Config\\Repository")){
+        if (class_exists("LaraGram\\Config\\Repository")) {
             $update_type = config()->get('bot.UPDATE_TYPE');
             $token = config()->get('bot.BOT_TOKEN');
             $api_server = config()->get('bot.BOT_API_SERVER');
-        }else{
+        } else {
             $update_type = $_ENV['UPDATE_TYPE'];
             $token = $_ENV['BOT_TOKEN'];
             $api_server = $_ENV['BOT_API_SERVER'];
         }
 
-        if ($this->mode == 0){
+        if ($this->mode == 0) {
             $this->mode = match ($update_type) {
                 'curl' => 32,
                 'no_response_curl' => 64,
@@ -89,7 +89,7 @@ trait Methode
         return $this->endpoint('close', get_defined_vars());
     }
 
-    public function sendMessage($chat_id, $text, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $link_preview_options = null, $entities = null, $business_connection_id = null, $message_effect_id = null): bool|array|null
+    public function sendMessage($chat_id, $text, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $link_preview_options = null, $entities = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|array|null
     {
         return $this->endpoint('sendMessage', get_defined_vars());
     }
@@ -104,7 +104,7 @@ trait Methode
         return $this->endpoint('forwardMessages', get_defined_vars());
     }
 
-    public function copyMessage($chat_id, $from_chat_id, $message_id, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption = null, $caption_entities = null, $show_caption_above_media = null): bool|string|array|null
+    public function copyMessage($chat_id, $from_chat_id, $message_id, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption = null, $caption_entities = null, $show_caption_above_media = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('copyMessage', get_defined_vars());
     }
@@ -114,72 +114,72 @@ trait Methode
         return $this->endpoint('copyMessages', get_defined_vars());
     }
 
-    public function sendPhoto($chat_id, $photo, $caption = null, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $has_spoiler = null, $caption_entities = null, $show_caption_above_media = null, $message_effect_id = null, $business_connection_id = null): bool|string|array|null
+    public function sendPhoto($chat_id, $photo, $caption = null, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $has_spoiler = null, $caption_entities = null, $show_caption_above_media = null, $message_effect_id = null, $business_connection_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendPhoto', get_defined_vars());
     }
 
-    public function sendAudio($chat_id, $audio, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $performer = null, $title = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendAudio($chat_id, $audio, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $performer = null, $title = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendAudio', get_defined_vars());
     }
 
-    public function sendDocument($chat_id, $document, $caption = null, $parse_mode = null, $message_thread_id = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $business_connection_id = null, $disable_content_type_detection = null, $message_effect_id = null): bool|string|array|null
+    public function sendDocument($chat_id, $document, $caption = null, $parse_mode = null, $message_thread_id = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $business_connection_id = null, $disable_content_type_detection = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendDocument', get_defined_vars());
     }
 
-    public function sendVideo($chat_id, $video, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $width = null, $height = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $show_caption_above_media = null, $has_spoiler = null, $supports_streaming = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendVideo($chat_id, $video, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $width = null, $height = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $show_caption_above_media = null, $has_spoiler = null, $supports_streaming = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendVideo', get_defined_vars());
     }
 
-    public function sendAnimation($chat_id, $animation, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $width = null, $height = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $show_caption_above_media = null, $has_spoiler = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendAnimation($chat_id, $animation, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $width = null, $height = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $show_caption_above_media = null, $has_spoiler = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendAnimation', get_defined_vars());
     }
 
-    public function sendVoice($chat_id, $voice, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendVoice($chat_id, $voice, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendVoice', get_defined_vars());
     }
 
-    public function sendVideoNote($chat_id, $video_note, $message_thread_id = null, $duration = null, $length = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendVideoNote($chat_id, $video_note, $message_thread_id = null, $duration = null, $length = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendVideoNote', get_defined_vars());
     }
 
-    public function sendPaidMedia($chat_id, $star_count, $media, $payload = null, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id  = null): bool|array|string|null
+    public function sendPaidMedia($chat_id, $star_count, $media, $payload = null, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id = null, $allow_paid_broadcast = null): bool|array|string|null
     {
         return $this->endpoint('sendPaidMedia', get_defined_vars());
     }
 
-    public function sendMediaGroup($chat_id, $media, $message_thread_id = null, $reply_parameters = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendMediaGroup($chat_id, $media, $message_thread_id = null, $reply_parameters = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendMediaGroup', get_defined_vars());
     }
 
-    public function sendLocation($chat_id, $latitude, $longitude, $horizontal_accuracy = null, $live_period = null, $heading = null, $proximity_alert_radius = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendLocation($chat_id, $latitude, $longitude, $horizontal_accuracy = null, $live_period = null, $heading = null, $proximity_alert_radius = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendLocation', get_defined_vars());
     }
 
-    public function sendVenue($chat_id, $latitude, $longitude, $title, $address, $foursquare_id = null, $foursquare_type = null, $google_place_id = null, $google_place_type = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendVenue($chat_id, $latitude, $longitude, $title, $address, $foursquare_id = null, $foursquare_type = null, $google_place_id = null, $google_place_type = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendVenue', get_defined_vars());
     }
 
-    public function sendContact($chat_id, $phone_number, $first_name, $last_name = null, $vcard = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendContact($chat_id, $phone_number, $first_name, $last_name = null, $vcard = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendContact', get_defined_vars());
     }
 
-    public function sendPoll($chat_id, $question, $options, $is_anonymous = null, $type = null, $allows_multiple_answers = null, $question_parse_mode = null, $question_entities = null, $correct_option_id = null, $explanation = null, $explanation_parse_mode = null, $explanation_entities = null, $open_period = null, $close_date = null, $is_closed = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendPoll($chat_id, $question, $options, $is_anonymous = null, $type = null, $allows_multiple_answers = null, $question_parse_mode = null, $question_entities = null, $correct_option_id = null, $explanation = null, $explanation_parse_mode = null, $explanation_entities = null, $open_period = null, $close_date = null, $is_closed = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendPoll', get_defined_vars());
     }
 
-    public function sendDice($chat_id, $emoji = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendDice($chat_id, $emoji = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendDice', get_defined_vars());
     }
@@ -534,7 +534,7 @@ trait Methode
         return $this->endpoint('deleteMessages', get_defined_vars());
     }
 
-    public function sendSticker($chat_id, $sticker, $emoji = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendSticker($chat_id, $sticker, $emoji = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendSticker', get_defined_vars());
     }
@@ -624,7 +624,7 @@ trait Methode
         return $this->endpoint('answerWebAppQuery', get_defined_vars());
     }
 
-    public function sendInvoice($chat_id, $title, $description, $payload, $provider_token, $currency, $price, $message_thread_id = null, $max_tip_amount = null, $suggested_tip_amounts = null, $start_parameter = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $message_effect_id = null): bool|string|array|null
+    public function sendInvoice($chat_id, $title, $description, $payload, $provider_token, $currency, $price, $message_thread_id = null, $max_tip_amount = null, $suggested_tip_amounts = null, $start_parameter = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendInvoice', get_defined_vars());
     }
@@ -659,7 +659,7 @@ trait Methode
         return $this->endpoint('setPassportDataErrors', get_defined_vars());
     }
 
-    public function sendGame($chat_id, $game_short_name, $message_thread_id = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id = null, $message_effect_id = null): bool|string|array|null
+    public function sendGame($chat_id, $game_short_name, $message_thread_id = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendGame', get_defined_vars());
     }
