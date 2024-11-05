@@ -18,9 +18,9 @@ trait Methode
     private function endpoint($method, $params): bool|array|string
     {
         if (class_exists("LaraGram\\Config\\Repository")) {
-            $update_type = config()->get('bot.UPDATE_TYPE');
-            $token = config()->get('bot.BOT_TOKEN');
-            $api_server = config()->get('bot.BOT_API_SERVER');
+            $update_type = config('laraquest.update_type');
+            $token = config('bot.bot.token');
+            $api_server = config('bot.api_server.endpoint');
         } else {
             $update_type = $_ENV['UPDATE_TYPE'];
             $token = $_ENV['BOT_TOKEN'];
