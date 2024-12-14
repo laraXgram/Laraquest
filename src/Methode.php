@@ -629,7 +629,7 @@ trait Methode
         return $this->endpoint('sendInvoice', get_defined_vars());
     }
 
-    public function createInvoiceLink($title, $description, $payload, $provider_token, $currency, $price, $max_tip_amount = null, $suggested_tip_amounts = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null): bool|string|array|null
+    public function createInvoiceLink($title, $description, $payload, $provider_token, $currency, $price, $subscription_period = null, $max_tip_amount = null, $suggested_tip_amounts = null, $provider_data = null, $photo_url = null, $photo_size = null, $photo_width = null, $photo_height = null, $need_name = null, $need_phone_number = null, $need_email = null, $need_shipping_address = null, $send_phone_number_to_provider = null, $send_email_to_provider = null, $is_flexible = null, $business_connection_id = null): bool|string|array|null
     {
         return $this->endpoint('createInvoiceLink', get_defined_vars());
     }
@@ -683,4 +683,30 @@ trait Methode
     {
         return $this->endpoint('editChatSubscriptionInviteLink', get_defined_vars());
     }
+
+    public function editUserStarSubscription($user_id, $telegram_payment_charge_id, $is_canceled): bool|array|string
+    {
+        return $this->endpoint('editUserStarSubscription', get_defined_vars());
+    }
+
+    public function setUserEmojiStatus($user_id, $emoji_status_custom_emoji_id = null, $emoji_status_expiration_date = null): bool|array|string
+    {
+        return $this->endpoint('setUserEmojiStatus', get_defined_vars());
+    }
+
+    public function savePreparedInlineMessage($user_id, $result, $allow_user_chats = null, $allow_bot_chats = null, $allow_group_chats = null, $allow_channel_chats = null): bool|array|string
+    {
+        return $this->endpoint('savePreparedInlineMessage', get_defined_vars());
+    }
+
+    public function getAvailableGifts(): bool|array|string
+    {
+        return $this->endpoint('getAvailableGifts', get_defined_vars());
+    }
+
+    public function sendGift($user_id, $gift_id, $text = null, $text_parse_mode = null, $text_entities = null): bool|array|string
+    {
+        return $this->endpoint('sendGift', get_defined_vars());
+    }
 }
+
