@@ -5,6 +5,19 @@
 composer require laraxgram/laraquest
 ```
 ---
+## Config:
+```php
+$_ENV["update_type"] = 'sync';
+$_ENV["BOT_TOKEN"] = "123456798:asdfghjklzxcvbnmqwpoieuryt";
+$_ENV["BOT_API_SERVER"] = "https://api.telegram.org/";
+
+// Polling
+$_ENV["sleep_interval"] = 0.5;
+$_ENV["timeout"] = 100;
+$_ENV["limit"] = 100;
+$_ENV["allow_updates"] = ["*"];
+```
+---
 ## Usage:
 
 #### Use Methods:
