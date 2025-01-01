@@ -704,9 +704,29 @@ trait Methode
         return $this->endpoint('getAvailableGifts', get_defined_vars());
     }
 
-    public function sendGift($user_id, $gift_id, $text = null, $text_parse_mode = null, $text_entities = null): bool|array|string
+    public function sendGift($user_id, $gift_id, $pay_for_upgrade = null, $text = null, $text_parse_mode = null, $text_entities = null): bool|array|string
     {
         return $this->endpoint('sendGift', get_defined_vars());
+    }
+
+    public function verifyUser($user_id, $custom_description = null): bool|array|string
+    {
+        return $this->endpoint('verifyUser', get_defined_vars());
+    }
+
+    public function verifyChat($chat_id, $custom_description = null): bool|array|string
+    {
+        return $this->endpoint('verifyChat', get_defined_vars());
+    }
+
+    public function removeUserVerification($user_id): bool|array|string
+    {
+        return $this->endpoint('removeUserVerification', get_defined_vars());
+    }
+
+    public function verifremoveChatVerificationyUser($chat_id): bool|array|string
+    {
+        return $this->endpoint('removeChatVerification', get_defined_vars());
     }
 }
 
