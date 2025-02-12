@@ -3,7 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
-
+ * @mixin MenuButtonCommands|MenuButtonWebApp|MenuButtonDefault
 **/
 class MenuButton { }

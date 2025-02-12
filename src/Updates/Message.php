@@ -26,21 +26,21 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $media_group_id
  * @property string $author_signature
  * @property string $text
- * @property array $entities
+ * @property MessageEntity[] $entities
  * @property LinkPreviewOptions $link_preview_options
  * @property string $effect_id
  * @property Animation $animation
  * @property Audio $audio
  * @property Document $document
  * @property PaidMediaInfo $paid_media
- * @property array $photo
+ * @property PhotoSize[] $photo
  * @property Sticker $sticker
  * @property Story $story
  * @property Video $video
  * @property VideoNote $video_note
  * @property Voice $voice
  * @property string $caption
- * @property array $caption_entities
+ * @property MessageEntity[] $caption_entities
  * @property True $show_caption_above_media
  * @property True $has_media_spoiler
  * @property Contact $contact
@@ -49,10 +49,10 @@ namespace LaraGram\Laraquest\Updates;
  * @property Poll $poll
  * @property Venue $venue
  * @property Location $location
- * @property array $new_chat_members
+ * @property User[] $new_chat_members
  * @property User $left_chat_member
  * @property string $new_chat_title
- * @property array $new_chat_photo
+ * @property PhotoSize[] $new_chat_photo
  * @property True $delete_chat_photo
  * @property True $group_chat_created
  * @property True $supergroup_chat_created

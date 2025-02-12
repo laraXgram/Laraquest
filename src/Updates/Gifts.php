@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property array $gifts
+ * @property Gift[] $gifts
 
  **/
 class Gifts { }

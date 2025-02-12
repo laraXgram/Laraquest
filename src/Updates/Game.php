@@ -5,9 +5,9 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property string $title
  * @property string $description
- * @property array $photo
+ * @property PhotoSize[] $photo
  * @property string $text
- * @property array $text_entities
+ * @property MessageEntity[] $text_entities
  * @property Animation $animation
 
 **/

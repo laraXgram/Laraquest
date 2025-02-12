@@ -7,7 +7,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $chat_id
  * @property string $title
  * @property string $username
- * @property array $photo
+ * @property PhotoSize[] $photo
 
 **/
 class ChatShared { }

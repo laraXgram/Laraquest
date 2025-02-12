@@ -5,7 +5,7 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property string $id
  * @property string $title
- * @property array $prices
+ * @property LabeledPrice[] $prices
 
 **/
 class ShippingOption { }

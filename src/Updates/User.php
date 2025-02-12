@@ -9,8 +9,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $last_name
  * @property string $username
  * @property string $language_code
- * @property True $is_premium
- * @property True $added_to_attachment_menu
+ * @property true $is_premium
+ * @property true $added_to_attachment_menu
  * @property bool $can_join_groups
  * @property bool $can_read_all_group_messages
  * @property bool $supports_inline_queries

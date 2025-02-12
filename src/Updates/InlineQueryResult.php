@@ -3,17 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
- * @property string $id
- * @property string $title
- * @property InputMessageContent $input_message_content
- * @property InlineKeyboardMarkup $reply_markup
- * @property string $url
- * @property bool $hide_url
- * @property string $description
- * @property string $thumbnail_url
- * @property int $thumbnail_width
- * @property int $thumbnail_height
-
+ * @mixin InlineQueryResultCachedAudio|InlineQueryResultCachedDocument|InlineQueryResultCachedGif|InlineQueryResultCachedMpeg4Gif|InlineQueryResultCachedPhoto|InlineQueryResultCachedSticker|InlineQueryResultCachedVideo|InlineQueryResultCachedVoice|InlineQueryResultArticle|InlineQueryResultAudio|InlineQueryResultContact|InlineQueryResultGame|InlineQueryResultDocument|InlineQueryResultGif|InlineQueryResultLocation|InlineQueryResultMpeg4Gif|InlineQueryResultPhoto|InlineQueryResultVenue|InlineQueryResultVideo|InlineQueryResultVoice
 **/
 class InlineQueryResult { }

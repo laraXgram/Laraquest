@@ -3,8 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
- * @property string $media
-
+ * @mixin InputPaidMediaPhoto|InputPaidMediaVideo
 **/
 class InputPaidMedia { }

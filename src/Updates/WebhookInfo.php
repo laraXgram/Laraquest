@@ -11,7 +11,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $last_error_message
  * @property int $last_synchronization_error_date
  * @property int $max_connections
- * @property array $allowed_updates
+ * @property string[] $allowed_updates
 
 **/
 class WebhookInfo { }

@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property array $users
+ * @property User[] $users
 
 **/
 class VideoChatParticipantsInvited { }

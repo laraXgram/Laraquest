@@ -38,6 +38,7 @@ use LaraGram\Laraquest\Updates\ShippingQuery;
  * @property CallbackQuery $callback_query
  * @property ShippingQuery $shipping_query
  * @property PreCheckoutQuery $pre_checkout_query
+ * @property PaidMediaPurchased $purchased_paid_media
  * @property Poll $poll
  * @property PollAnswer $poll_answer
  * @property ChatMemberUpdated $my_chat_member
@@ -45,7 +46,6 @@ use LaraGram\Laraquest\Updates\ShippingQuery;
  * @property ChatJoinRequest $chat_join_request
  * @property ChatBoostUpdated $chat_boost
  * @property ChatBoostRemoved $removed_chat_boost
- * @property PaidMediaPurchased $purchased_paid_media
  */
 trait Updates
 {

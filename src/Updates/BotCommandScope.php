@@ -3,7 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
-
-**/
+ * @mixin BotCommandScopeDefault|BotCommandScopeAllPrivateChats|BotCommandScopeAllGroupChats|BotCommandScopeAllChatAdministrators|BotCommandScopeChat|BotCommandScopeChatAdministrators|BotCommandScopeChatMember
+ **/
 class BotCommandScope { }

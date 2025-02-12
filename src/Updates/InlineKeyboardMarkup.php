@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property array $inline_keyboard
+ * @property InlineKeyboardButton[][] $inline_keyboard
 
 **/
 class InlineKeyboardMarkup { }

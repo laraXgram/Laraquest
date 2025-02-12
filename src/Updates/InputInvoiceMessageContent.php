@@ -8,9 +8,9 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $payload
  * @property string $provider_token
  * @property string $currency
- * @property array $prices
+ * @property LabeledPrice[] $prices
  * @property int $max_tip_amount
- * @property array $suggested_tip_amounts
+ * @property int[] $suggested_tip_amounts
  * @property string $provider_data
  * @property string $photo_url
  * @property int $photo_size

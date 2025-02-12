@@ -3,9 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
- * @property User $user
- * @property string $invoice_payload
-
+ * @mixin TransactionPartnerUser|TransactionPartnerChat|TransactionPartnerAffiliateProgram|TransactionPartnerFragment|TransactionPartnerTelegramAds|TransactionPartnerTelegramApi|TransactionPartnerOther
 **/
 class TransactionPartner { }

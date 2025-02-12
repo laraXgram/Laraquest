@@ -3,8 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
- * @property string $emoji
-
+ * @mixin ReactionTypeEmoji|ReactionTypeCustomEmoji|ReactionTypePaid
 **/
 class ReactionType { }

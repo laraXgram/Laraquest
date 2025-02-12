@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property array $transactions
+ * @property StarTransaction[] $transactions
 
 **/
 class StarTransactions { }

@@ -11,7 +11,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property Audio $audio
  * @property Document $document
  * @property PaidMediaInfo $paid_media
- * @property array $photo
+ * @property PhotoSize[] $photo
  * @property Sticker $sticker
  * @property Story $story
  * @property Video $video
@@ -27,6 +27,5 @@ namespace LaraGram\Laraquest\Updates;
  * @property Location $location
  * @property Poll $poll
  * @property Venue $venue
-
-**/
+ **/
 class ExternalReplyInfo { }

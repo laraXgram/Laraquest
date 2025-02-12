@@ -9,9 +9,10 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $height
  * @property int $duration
  * @property PhotoSize $thumbnail
+ * @property PhotoSize[] $cover
+ * @property int $start_timestamp
  * @property string $file_name
  * @property string $mime_type
  * @property int $file_size
-
-**/
+ **/
 class Video { }

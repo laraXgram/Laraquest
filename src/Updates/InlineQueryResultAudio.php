@@ -9,7 +9,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $title
  * @property string $caption
  * @property string $parse_mode
- * @property array $caption_entities
+ * @property MessageEntity[] $caption_entities
  * @property string $performer
  * @property int $audio_duration
  * @property InlineKeyboardMarkup $reply_markup

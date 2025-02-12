@@ -3,8 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $source
- * @property User $user
-
-**/
+ * @mixin ChatBoostSourcePremium|ChatBoostSourceGiftCode|ChatBoostSourceGiveaway
+ **/
 class ChatBoostSource { }

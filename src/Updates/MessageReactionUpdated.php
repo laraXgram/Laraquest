@@ -8,8 +8,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $user
  * @property Chat $actor_chat
  * @property int $date
- * @property array $old_reaction
- * @property array $new_reaction
+ * @property ReactionType[] $old_reaction
+ * @property ReactionType[] $new_reaction
 
 **/
 class MessageReactionUpdated { }

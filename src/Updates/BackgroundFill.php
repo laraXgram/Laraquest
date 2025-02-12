@@ -3,8 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
- * @property int $color
-
+ * @mixin BackgroundFillSolid|BackgroundFillGradient|BackgroundFillFreeformGradient
 **/
 class BackgroundFill { }

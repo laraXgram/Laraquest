@@ -4,7 +4,7 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property string $type
- * @property array $photo
+ * @property PhotoSize[] $photo
 
 **/
 class PaidMediaPhoto { }

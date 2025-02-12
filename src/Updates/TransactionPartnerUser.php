@@ -8,7 +8,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property AffiliateInfo $affiliate
  * @property string $invoice_payload
  * @property int $subscription_period
- * @property array $paid_media
+ * @property PaidMedia[] $paid_media
  * @property string $paid_media_payload
  * @property Gift $gift
 

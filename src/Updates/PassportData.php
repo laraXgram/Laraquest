@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property array $data
+ * @property EncryptedPassportElement[] $data
  * @property EncryptedCredentials $credentials
 
 **/

@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property array $boosts
+ * @property ChatBoost[] $boosts
 
 **/
 class UserChatBoosts { }

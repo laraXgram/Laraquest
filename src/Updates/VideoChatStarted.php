@@ -2,8 +2,4 @@
 
 namespace LaraGram\Laraquest\Updates;
 
-/**
- * @property int $duration
-
-**/
 class VideoChatStarted { }

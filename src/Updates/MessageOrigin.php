@@ -3,9 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
- * @property int $date
- * @property User $sender_user
-
+ * @mixin MessageOriginUser|MessageOriginHiddenUser|MessageOriginChat|MessageOriginChannel
 **/
 class MessageOrigin { }

@@ -4,7 +4,7 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property int $request_id
- * @property array $users
+ * @property SharedUser[] $users
 
 **/
 class UsersShared { }

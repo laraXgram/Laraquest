@@ -94,7 +94,7 @@ trait Methode
         return $this->endpoint('sendMessage', get_defined_vars());
     }
 
-    public function forwardMessage($chat_id, $from_chat_id, $message_id, $message_thread_id = null, $protect_content = null, $disable_notification = null): bool|string|array|null
+    public function forwardMessage($chat_id, $from_chat_id, $message_id, $video_start_timestamp = null, $message_thread_id = null, $protect_content = null, $disable_notification = null): bool|string|array|null
     {
         return $this->endpoint('forwardMessage', get_defined_vars());
     }
@@ -104,7 +104,7 @@ trait Methode
         return $this->endpoint('forwardMessages', get_defined_vars());
     }
 
-    public function copyMessage($chat_id, $from_chat_id, $message_id, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption = null, $caption_entities = null, $show_caption_above_media = null, $allow_paid_broadcast = null): bool|string|array|null
+    public function copyMessage($chat_id, $from_chat_id, $message_id, $video_start_timestamp = null, $parse_mode = null, $message_thread_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption = null, $caption_entities = null, $show_caption_above_media = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('copyMessage', get_defined_vars());
     }
@@ -129,7 +129,7 @@ trait Methode
         return $this->endpoint('sendDocument', get_defined_vars());
     }
 
-    public function sendVideo($chat_id, $video, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $width = null, $height = null, $thumbnail = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $show_caption_above_media = null, $has_spoiler = null, $supports_streaming = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
+    public function sendVideo($chat_id, $video, $caption = null, $parse_mode = null, $message_thread_id = null, $duration = null, $width = null, $height = null, $thumbnail = null, $cover = null, $start_timestamp = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption_entities = null, $show_caption_above_media = null, $has_spoiler = null, $supports_streaming = null, $business_connection_id = null, $message_effect_id = null, $allow_paid_broadcast = null): bool|string|array|null
     {
         return $this->endpoint('sendVideo', get_defined_vars());
     }
@@ -704,7 +704,7 @@ trait Methode
         return $this->endpoint('getAvailableGifts', get_defined_vars());
     }
 
-    public function sendGift($user_id, $gift_id, $pay_for_upgrade = null, $text = null, $text_parse_mode = null, $text_entities = null): bool|array|string
+    public function sendGift($user_id, $gift_id, $chat_id = null, $pay_for_upgrade = null, $text = null, $text_parse_mode = null, $text_entities = null): bool|array|string
     {
         return $this->endpoint('sendGift', get_defined_vars());
     }

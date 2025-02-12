@@ -5,7 +5,7 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property string $business_connection_id
  * @property Chat $chat
- * @property array $message_ids
+ * @property int[] $message_ids
 
 **/
 class BusinessMessagesDeleted { }

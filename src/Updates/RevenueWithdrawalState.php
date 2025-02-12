@@ -3,7 +3,6 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property string $type
-
+ * @mixin RevenueWithdrawalStatePending|RevenueWithdrawalStateSucceeded|RevenueWithdrawalStateFailed
 **/
 class RevenueWithdrawalState { }

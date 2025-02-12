@@ -8,7 +8,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property InputFile|String $thumbnail
  * @property string $caption
  * @property string $parse_mode
- * @property array $caption_entities
+ * @property MessageEntity[] $caption_entities
  * @property bool $show_caption_above_media
  * @property int $width
  * @property int $height
