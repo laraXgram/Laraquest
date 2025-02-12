@@ -1,6 +1,6 @@
 # Laraquest
 Sending requests and receiving Telegram updates.
-- Bot API Version `8.2`
+- Bot API Version `8.3`
 
 ## Other Versions
 - [Laraquest GoLang](https://github.com/laraXgram/Laraquest-Go)
@@ -16,19 +16,19 @@ composer require laraxgram/laraquest
 ---
 ## Config:
 ```php
-$_ENV["BOT_TOKEN"] = "123456798:asdfghjklzxcvbnmqwpoieuryt"; // required
-$_ENV["BOT_API_SERVER"] = "https://api.telegram.org/"; // optional
+$_ENV["BOT_TOKEN"] = "123456789:ABcdEfGHigKLMnopQrStuvWXYZ"; // required
+$_ENV["BOT_API_SERVER"] = "https://api.telegram.org/"; // default-optional
 
 // Polling
-$_ENV["sleep_interval"] = 0.5; // optional
-$_ENV["timeout"] = 100; // optional
-$_ENV["limit"] = 100; // optional
-$_ENV["allow_updates"] = ["*"]; // optional
+$_ENV["sleep_interval"] = 0.5; // default-optional
+$_ENV["timeout"] = 100; // default-optional
+$_ENV["limit"] = 100; // default-optional
+$_ENV["allow_updates"] = ["*"]; // default-optional
 ```
 ---
 ## Usage:
 
-#### Use Methods:
+#### Methods:
 Just use trait Method in your class!
 ```php
 use LaraGram\Laraquest\Methode;
@@ -42,7 +42,7 @@ $bot->sendMessage(123456789, 'hello!');
 ```
 ---
 Just use trait Updates in your class!
-#### Use Updates:
+#### Updates:
 ```php
 use LaraGram\Laraquest\Updates;
 
@@ -54,7 +54,7 @@ $bot = new MyBotClass();
 $chatID = $bot->message->chat->id;
 ```
 ---
-#### Use Both:
+#### Both:
 Just use trait Method and Updates in your class!
 ```php
 use LaraGram\Laraquest\Methode;
@@ -71,11 +71,7 @@ $bot->sendMessage($bot->message->chat->id, 'hello!');
 
 ### Long Polling
 ```php
-Laraquest::polling(function(){
-    // ...
-});
-
 Laraquest::polling(function(Laraquest $request){
-    // ...
+    $request->sendMessage($request->message->chat->id, "Hello, Laraquest!")
 });
 ```
