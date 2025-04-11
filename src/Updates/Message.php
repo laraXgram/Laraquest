@@ -25,6 +25,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property True $is_from_offline
  * @property string $media_group_id
  * @property string $author_signature
+ * @property int $paid_star_count
  * @property string $text
  * @property MessageEntity[] $entities
  * @property LinkPreviewOptions $link_preview_options
@@ -66,6 +67,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property RefundedPayment $refunded_payment
  * @property UsersShared $users_shared
  * @property ChatShared $chat_shared
+ * @property GiftInfo $gift
  * @property string $connected_website
  * @property WriteAccessAllowed $write_access_allowed
  * @property PassportData $passport_data
@@ -82,6 +84,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property Giveaway $giveaway
  * @property GiveawayWinners $giveaway_winners
  * @property GiveawayCompleted $giveaway_completed
+ * @property PaidMessagePriceChanged $paid_message_price_changed
  * @property VideoChatScheduled $video_chat_scheduled
  * @property VideoChatStarted $video_chat_started
  * @property VideoChatEnded $video_chat_ended

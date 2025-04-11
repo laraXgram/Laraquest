@@ -724,9 +724,94 @@ trait Methode
         return $this->endpoint('removeUserVerification', get_defined_vars());
     }
 
-    public function verifremoveChatVerificationyUser($chat_id): bool|array|string
+    public function removeChatVerification($chat_id): bool|array|string
     {
         return $this->endpoint('removeChatVerification', get_defined_vars());
+    }
+
+    public function deleteBusinessMessages($business_connection_id, $message_ids): bool|array|string
+    {
+        return $this->endpoint('deleteBusinessMessages', get_defined_vars());
+    }
+
+    public function setBusinessAccountName($business_connection_id, $first_name, $last_name = null): bool|array|string
+    {
+        return $this->endpoint('setBusinessAccountName', get_defined_vars());
+    }
+
+    public function setBusinessAccountUsername($business_connection_id, $username = null): bool|array|string
+    {
+        return $this->endpoint('setBusinessAccountUsername', get_defined_vars());
+    }
+
+    public function setBusinessAccountBio($business_connection_id, $bio = null): bool|array|string
+    {
+        return $this->endpoint('setBusinessAccountBio', get_defined_vars());
+    }
+
+    public function setBusinessAccountProfilePhoto($business_connection_id, $photo, $is_public = null): bool|array|string
+    {
+        return $this->endpoint('setBusinessAccountProfilePhoto', get_defined_vars());
+    }
+
+    public function removeBusinessAccountProfilePhoto($business_connection_id, $is_public = null): bool|array|string
+    {
+        return $this->endpoint('removeBusinessAccountProfilePhoto', get_defined_vars());
+    }
+
+    public function setBusinessAccountGiftSettings($business_connection_id, $show_gift_button, $accepted_gift_types): bool|array|string
+    {
+        return $this->endpoint('setBusinessAccountGiftSettings', get_defined_vars());
+    }
+
+    public function getBusinessAccountStarBalance($business_connection_id): bool|array|string
+    {
+        return $this->endpoint('getBusinessAccountStarBalance', get_defined_vars());
+    }
+
+    public function transferBusinessAccountStars($business_connection_id, $star_count): bool|array|string
+    {
+        return $this->endpoint('transferBusinessAccountStars', get_defined_vars());
+    }
+
+    public function getBusinessAccountGifts($business_connection_id, $exclude_unsaved = null, $exclude_saved = null, $exclude_unlimited = null, $exclude_limited = null, $exclude_unique = null, $sort_by_price = null, $offset = null, $limit = null): bool|array|string
+    {
+        return $this->endpoint('getBusinessAccountGifts', get_defined_vars());
+    }
+
+    public function convertGiftToStars($business_connection_id, $owned_gift_id): bool|array|string
+    {
+        return $this->endpoint('convertGiftToStars', get_defined_vars());
+    }
+
+    public function upgradeGift($business_connection_id, $owned_gift_id, $keep_original_details = null, $star_count = null): bool|array|string
+    {
+        return $this->endpoint('upgradeGift', get_defined_vars());
+    }
+
+    public function transferGift($business_connection_id, $owned_gift_id, $new_owner_chat_id, $star_count = null): bool|array|string
+    {
+        return $this->endpoint('transferGift', get_defined_vars());
+    }
+
+    public function postStory($business_connection_id, $content, $active_period, $caption = null, $parse_mode = null, $caption_entities = null, $areas = null, $post_to_chat_page = null, $protect_content = null): bool|array|string
+    {
+        return $this->endpoint('postStory', get_defined_vars());
+    }
+
+    public function editStory($business_connection_id, $story_id, $content, $caption = null, $parse_mode = null, $caption_entities = null, $areas = null): bool|array|string
+    {
+        return $this->endpoint('editStory', get_defined_vars());
+    }
+
+    public function deleteStory($business_connection_id, $story_id): bool|array|string
+    {
+        return $this->endpoint('deleteStory', get_defined_vars());
+    }
+
+    public function giftPremiumSubscription($user_id, $month_count, $star_count, $text = null, $text_parse_mode = null, $text_entities = null): bool|array|string
+    {
+        return $this->endpoint('giftPremiumSubscription', get_defined_vars());
     }
 }
 

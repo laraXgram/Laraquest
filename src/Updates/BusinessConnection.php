@@ -7,7 +7,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $user
  * @property int $user_chat_id
  * @property int $date
- * @property bool $can_reply
+ * @property BusinessBotRights $rights
  * @property bool $is_enabled
 
 **/
