@@ -44,6 +44,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property MessageEntity[] $caption_entities
  * @property True $show_caption_above_media
  * @property True $has_media_spoiler
+ * @property Checklist $checklist
  * @property Contact $contact
  * @property Dice $dice
  * @property Game $game
@@ -74,6 +75,9 @@ namespace LaraGram\Laraquest\Updates;
  * @property ProximityAlertTriggered $proximity_alert_triggered
  * @property ChatBoostAdded $boost_added
  * @property ChatBackground $chat_background_set
+ * @property ChecklistTasksDone $checklist_tasks_done
+ * @property ChecklistTasksAdded $checklist_tasks_added
+ * @property DirectMessagePriceChanged $direct_message_price_changed
  * @property ForumTopicCreated $forum_topic_created
  * @property ForumTopicEdited $forum_topic_edited
  * @property ForumTopicClosed $forum_topic_closed

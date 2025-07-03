@@ -11,5 +11,6 @@ namespace LaraGram\Laraquest\Updates;
  * @property True $is_saved
  * @property True $can_be_transferred
  * @property int $transfer_star_count
+ * @property string $next_transfer_date
  **/
 class OwnedGiftUnique { }

@@ -813,5 +813,20 @@ trait Methode
     {
         return $this->endpoint('giftPremiumSubscription', get_defined_vars());
     }
+
+    public function sendChecklist($business_connection_id, $chat_id, $checklist, $disable_notification = null, $protect_content = null, $message_effect_id = null, $reply_parameters = null, $reply_markup = null): bool|array|string
+    {
+        return $this->endpoint('sendChecklist', get_defined_vars());
+    }
+
+    public function editMessageChecklist($business_connection_id, $chat_id, $message_id, $checklist, $reply_markup = null): bool|array|string
+    {
+        return $this->endpoint('editMessageChecklist', get_defined_vars());
+    }
+
+    public function getMyStarBalance(): bool|array|string
+    {
+        return $this->endpoint('getMyStarBalance', get_defined_vars());
+    }
 }
 
