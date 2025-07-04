@@ -1,12 +1,12 @@
 {
     "name": "laraxgram/laraquest",
     "description": "Sending requests and receiving Telegram updates.",
+    "keywords": ["php", "laragram", "laravel", "laraquest", "telegram", "bot"],
     "type": "library",
-    "license": "GPL-3.0",
-    "autoload": {
-        "psr-4": {
-            "LaraGram\\Laraquest\\": "src/"
-        }
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/laraxgram/laraquest/issues",
+        "source": "https://github.com/laraxgram/laraquest"
     },
     "authors": [
         {
@@ -14,8 +14,25 @@
             "email": "laraxgram@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "ext-curl": "*"
-    }
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "LaraGram\\Laraquest\\": "src/"
+        }
+    },
+    "extra": {
+        "laragram": {
+            "providers": [
+                "LaraGram\\Laraquest\\LaraquestServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
