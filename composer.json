@@ -17,7 +17,6 @@
     "require": {
         "ext-curl": "*"
     },
-    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "LaraGram\\Laraquest\\": "src/"
