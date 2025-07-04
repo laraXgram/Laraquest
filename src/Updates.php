@@ -72,6 +72,7 @@ trait Updates
     }
     public function __get($name)
     {
+        global $argv;
         global $data;
         global $swoole;
         $update = match ($this->update_type){
@@ -115,11 +116,12 @@ trait Updates
 
     public function getData()
     {
+        global $argv;
         global $data;
         global $swoole;
         return match ($this->update_type){
             'sync' => json_decode(file_get_contents('php://input')),
-            'global' => json_decode($data['argv'][1]),
+            'global' => json_decode($argv[1] ?? ''),
             'openswoole', 'swoole' => $swoole,
             'polling' => $data,
             default => throw new InvalidGetUpdateType("Unknown get update type")
