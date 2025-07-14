@@ -8,6 +8,7 @@ use LaraGram\Laraquest\Connection\NoResponseCurl;
 trait Methode
 {
     private int|Mode $mode = 0;
+    private $connection = null;
 
     public function mode(Mode|int $mode): static
     {
@@ -15,15 +16,26 @@ trait Methode
         return $this;
     }
 
+    public function connection($name)
+    {
+        $this->connection = $name;
+        return $this;
+    }
+
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+
     private function endpoint($method, $params): bool|array|string
     {
         if (class_exists("LaraGram\\Config\\Repository")) {
             $update_type = config('laraquest.update_type');
-            $token = config('bot.bot.token');
+            $token = config('bot.connections.'.$this->connection.'.token');
             $api_server = config('bot.api_server.endpoint');
         } else {
             $update_type = $_ENV['UPDATE_TYPE'];
-            $token = $_ENV['BOT_TOKEN'];
+            $token = $_ENV['CONNECTIONS'][$this->connection ?? 'bot']['BOT_TOKEN'] ?? $_ENV['BOT_TOKEN'];
             $api_server = $_ENV['BOT_API_SERVER'];
         }
 
