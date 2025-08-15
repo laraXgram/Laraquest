@@ -16,7 +16,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property File $premium_animation
  * @property MaskPosition $mask_position
  * @property string $custom_emoji_id
- * @property True $needs_repainting
+ * @property true $needs_repainting
  * @property int $file_size
 
 **/

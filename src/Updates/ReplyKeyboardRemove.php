@@ -3,7 +3,7 @@
 namespace LaraGram\Laraquest\Updates;
 
 /**
- * @property True $remove_keyboard
+ * @property true $remove_keyboard
  * @property bool $selective
 
 **/

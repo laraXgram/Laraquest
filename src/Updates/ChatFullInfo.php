@@ -10,6 +10,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $first_name
  * @property string $last_name
  * @property true $is_forum
+ * @property true $is_direct_messages
  * @property int $accent_color_id
  * @property int $max_reaction_count
  * @property ChatPhoto $photo
@@ -19,6 +20,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property BusinessLocation $business_location
  * @property BusinessOpeningHours $business_opening_hours
  * @property Chat $personal_chat
+ * @property Chat $parent_chat
  * @property ReactionType[] $available_reactions
  * @property string $background_custom_emoji_id
  * @property int $profile_accent_color_id

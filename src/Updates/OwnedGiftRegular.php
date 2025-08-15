@@ -10,10 +10,10 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $send_date
  * @property string $text
  * @property array<MessageEntity> $entities
- * @property True $is_private
- * @property True $is_saved
- * @property True $can_be_upgraded
- * @property True $was_refunded
+ * @property true $is_private
+ * @property true $is_saved
+ * @property true $can_be_upgraded
+ * @property true $was_refunded
  * @property int $convert_star_count
  * @property int $prepaid_upgrade_star_count
  **/

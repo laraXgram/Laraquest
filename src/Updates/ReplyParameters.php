@@ -10,6 +10,6 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $quote_parse_mode
  * @property MessageEntity[] $quote_entities
  * @property int $quote_position
-
+ * @property int $checklist_task_id
 **/
 class ReplyParameters { }

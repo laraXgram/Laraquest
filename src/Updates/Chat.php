@@ -9,7 +9,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $username
  * @property string $first_name
  * @property string $last_name
- * @property True $is_forum
-
+ * @property true $is_forum
+ * @property true $is_direct_messages
  **/
 class Chat { }

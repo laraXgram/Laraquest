@@ -17,7 +17,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property Video $video
  * @property VideoNote $video_note
  * @property Voice $voice
- * @property True $has_media_spoiler
+ * @property true $has_media_spoiler
  * @property Checklist $checklist
  * @property Contact $contact
  * @property Dice $dice

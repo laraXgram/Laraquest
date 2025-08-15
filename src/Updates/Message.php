@@ -5,6 +5,7 @@ namespace LaraGram\Laraquest\Updates;
 /**
  * @property int $message_id
  * @property int $message_thread_id
+ * @property DirectMessagesTopic $direct_messages_topic
  * @property User $from
  * @property Chat $sender_chat
  * @property int $sender_boost_count
@@ -13,22 +14,25 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $business_connection_id
  * @property Chat $chat
  * @property MessageOrigin $forward_origin
- * @property True $is_topic_message
- * @property True $is_automatic_forward
+ * @property true $is_topic_message
+ * @property true $is_automatic_forward
  * @property Message $reply_to_message
  * @property ExternalReplyInfo $external_reply
  * @property TextQuote $quote
  * @property Story $reply_to_story
+ * @property int $reply_to_checklist_task_id
  * @property User $via_bot
  * @property int $edit_date
- * @property True $has_protected_content
- * @property True $is_from_offline
+ * @property true $has_protected_content
+ * @property true $is_from_offline
+ * @property true $is_paid_post
  * @property string $media_group_id
  * @property string $author_signature
  * @property int $paid_star_count
  * @property string $text
  * @property MessageEntity[] $entities
  * @property LinkPreviewOptions $link_preview_options
+ * @property SuggestedPostInfo $suggested_post_info
  * @property string $effect_id
  * @property Animation $animation
  * @property Audio $audio
@@ -42,8 +46,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property Voice $voice
  * @property string $caption
  * @property MessageEntity[] $caption_entities
- * @property True $show_caption_above_media
- * @property True $has_media_spoiler
+ * @property true $show_caption_above_media
+ * @property true $has_media_spoiler
  * @property Checklist $checklist
  * @property Contact $contact
  * @property Dice $dice
@@ -55,10 +59,10 @@ namespace LaraGram\Laraquest\Updates;
  * @property User $left_chat_member
  * @property string $new_chat_title
  * @property PhotoSize[] $new_chat_photo
- * @property True $delete_chat_photo
- * @property True $group_chat_created
- * @property True $supergroup_chat_created
- * @property True $channel_chat_created
+ * @property true $delete_chat_photo
+ * @property true $group_chat_created
+ * @property true $supergroup_chat_created
+ * @property true $channel_chat_created
  * @property MessageAutoDeleteTimerChanged $message_auto_delete_timer_changed
  * @property int $migrate_to_chat_id
  * @property int $migrate_from_chat_id
@@ -89,6 +93,11 @@ namespace LaraGram\Laraquest\Updates;
  * @property GiveawayWinners $giveaway_winners
  * @property GiveawayCompleted $giveaway_completed
  * @property PaidMessagePriceChanged $paid_message_price_changed
+ * @property SuggestedPostApproved $suggested_post_approved
+ * @property SuggestedPostApprovalFailed $suggested_post_approval_failed
+ * @property SuggestedPostDeclined $suggested_post_declined
+ * @property SuggestedPostPaid $suggested_post_paid
+ * @property SuggestedPostRefunded $suggested_post_refunded
  * @property VideoChatScheduled $video_chat_scheduled
  * @property VideoChatStarted $video_chat_started
  * @property VideoChatEnded $video_chat_ended

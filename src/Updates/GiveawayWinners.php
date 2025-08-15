@@ -12,8 +12,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $prize_star_count
  * @property int $premium_subscription_month_count
  * @property int $unclaimed_prize_count
- * @property True $only_new_members
- * @property True $was_refunded
+ * @property true $only_new_members
+ * @property true $was_refunded
  * @property string $prize_description
 
 **/

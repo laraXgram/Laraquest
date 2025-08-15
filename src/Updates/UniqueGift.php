@@ -9,5 +9,6 @@ namespace LaraGram\Laraquest\Updates;
  * @property UniqueGiftModel $model
  * @property UniqueGiftSymbol $symbol
  * @property UniqueGiftBackdrop $backdrop
+ * @property Chat $publisher_chat
  **/
 class UniqueGift { }
