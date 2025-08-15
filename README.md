@@ -75,3 +75,17 @@ Laraquest::polling(function(Laraquest $request){
     $request->sendMessage($request->message->chat->id, "Hello, Laraquest!")
 });
 ```
+
+### Multi Connection
+```php
+$_ENV['CONNECTIONS']['first_bot']['BOT_TOKEN'] = 'XXX';
+$_ENV['CONNECTIONS']['second_bot']['BOT_TOKEN'] = 'YYY';
+
+$first_bot = $bot->connection('first_bot');
+$second_bot = $bot->connection('second_bot');
+
+$first_bot->sendMessage(...);
+$second_bot->deleteMessage(...);
+
+$first_bot->getConnection(); // first_bot
+```
