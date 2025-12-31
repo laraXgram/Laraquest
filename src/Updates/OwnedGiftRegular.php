@@ -16,5 +16,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property true $was_refunded
  * @property int $convert_star_count
  * @property int $prepaid_upgrade_star_count
+ * @property true $is_upgrade_separate
+ * @property int $unique_gift_number
  **/
 class OwnedGiftRegular { }

@@ -107,7 +107,7 @@ trait Methode
         return $this->endpoint('sendMessage', get_defined_vars());
     }
 
-    public function forwardMessage($chat_id, $from_chat_id, $message_id, $video_start_timestamp = null, $message_thread_id = null, $direct_messages_topic_id = null, $protect_content = null, $disable_notification = null, $suggested_post_parameters = null)
+    public function forwardMessage($chat_id, $from_chat_id, $message_id, $video_start_timestamp = null, $message_thread_id = null, $direct_messages_topic_id = null, $protect_content = null, $disable_notification = null, $suggested_post_parameters = null, $message_effect_id = null)
     {
         return $this->endpoint('forwardMessage', get_defined_vars());
     }
@@ -117,7 +117,7 @@ trait Methode
         return $this->endpoint('forwardMessages', get_defined_vars());
     }
 
-    public function copyMessage($chat_id, $from_chat_id, $message_id, $video_start_timestamp = null, $parse_mode = null, $message_thread_id = null, $direct_messages_topic_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption = null, $caption_entities = null, $show_caption_above_media = null, $allow_paid_broadcast = null, $suggested_post_parameters = null)
+    public function copyMessage($chat_id, $from_chat_id, $message_id, $video_start_timestamp = null, $parse_mode = null, $message_thread_id = null, $direct_messages_topic_id = null, $reply_parameters = null, $reply_markup = null, $protect_content = null, $disable_notification = null, $caption = null, $caption_entities = null, $show_caption_above_media = null, $allow_paid_broadcast = null, $suggested_post_parameters = null, $message_effect_id = null)
     {
         return $this->endpoint('copyMessage', get_defined_vars());
     }
@@ -162,7 +162,7 @@ trait Methode
         return $this->endpoint('sendVideoNote', get_defined_vars());
     }
 
-    public function sendPaidMedia($chat_id, $star_count, $media, $payload = null, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id = null, $direct_messages_topic_id = null, $allow_paid_broadcast = null, $suggested_post_parameters = null)
+    public function sendPaidMedia($chat_id, $star_count, $media, $payload = null, $caption = null, $pars_mode = null, $caption_entities = null, $show_caption_above_media = null, $disable_notification = null, $protect_content = null, $reply_parameters = null, $reply_markup = null, $business_connection_id = null, $direct_messages_topic_id = null, $allow_paid_broadcast = null, $suggested_post_parameters = null, $message_thread_id = null)
     {
         return $this->endpoint('sendPaidMedia', get_defined_vars());
     }
@@ -787,7 +787,7 @@ trait Methode
         return $this->endpoint('transferBusinessAccountStars', get_defined_vars());
     }
 
-    public function getBusinessAccountGifts($business_connection_id, $exclude_unsaved = null, $exclude_saved = null, $exclude_unlimited = null, $exclude_limited = null, $exclude_unique = null, $sort_by_price = null, $offset = null, $limit = null)
+    public function getBusinessAccountGifts($business_connection_id, $exclude_unsaved = null, $exclude_saved = null, $exclude_unlimited = null, $exclude_limited_upgradable = null, $exclude_limited_non_upgradable = null, $exclude_unique = null, $exclude_from_blockchain = null, $sort_by_price = null, $offset = null, $limit = null)
     {
         return $this->endpoint('getBusinessAccountGifts', get_defined_vars());
     }
@@ -822,6 +822,11 @@ trait Methode
         return $this->endpoint('deleteStory', get_defined_vars());
     }
 
+    public function repostStory($business_connection_id, $from_chat_id, $from_story_id, $active_period, $post_to_chat_page = null, $protect_content = null)
+    {
+        return $this->endpoint('repostStory', get_defined_vars());
+    }
+
     public function giftPremiumSubscription($user_id, $month_count, $star_count, $text = null, $text_parse_mode = null, $text_entities = null)
     {
         return $this->endpoint('giftPremiumSubscription', get_defined_vars());
@@ -850,6 +855,21 @@ trait Methode
     public function declineSuggestedPost($chat_id, $message_id, $comment = null)
     {
         return $this->endpoint('declineSuggestedPost', get_defined_vars());
+    }
+
+    public function sendMessageDraft($chat_id, $draft_id, $text, $parse_mode = null, $message_thread_id = null, $entities = null)
+    {
+        return $this->endpoint('sendMessageDraft', get_defined_vars());
+    }
+
+    public function getUserGifts($chat_id, $exclude_unlimited = null, $exclude_limited_upgradable = null, $exclude_limited_non_upgradable = null, $exclude_from_blockchain = null, $exclude_unique = null, $sort_by_price = null, $offset = null, $limit = null)
+    {
+        return $this->endpoint('getUserGifts', get_defined_vars());
+    }
+
+    public function getChatGifts($chat_id, $exclude_unsaved = null, $exclude_saved = null, $exclude_unlimited = null, $exclude_limited_upgradable = null, $exclude_limited_non_upgradable = null, $exclude_from_blockchain = null, $exclude_unique = null, $sort_by_price = null, $offset = null, $limit = null)
+    {
+        return $this->endpoint('getChatGifts', get_defined_vars());
     }
 }
 

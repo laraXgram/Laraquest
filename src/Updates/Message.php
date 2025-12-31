@@ -73,6 +73,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property UsersShared $users_shared
  * @property ChatShared $chat_shared
  * @property GiftInfo $gift
+ * @property GiftInfo $gift_upgrade_sent
  * @property string $connected_website
  * @property WriteAccessAllowed $write_access_allowed
  * @property PassportData $passport_data

@@ -50,5 +50,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property string $custom_emoji_sticker_set_name
  * @property int $linked_chat_id
  * @property ChatLocation $location
+ * @property UserRating $rating
+ * @property UniqueGiftColors $unique_gift_colors
+ * @property int $paid_message_star_count
  **/
 class ChatFullInfo { }
