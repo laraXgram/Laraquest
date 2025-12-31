@@ -1,6 +1,6 @@
 # Laraquest
 Sending requests and receiving Telegram updates.
-- Bot API Version `9.2`
+- Bot API Version `9.3`
 
 ## Other Versions
 - [Laraquest GoLang](https://github.com/laraXgram/Laraquest-Go)
