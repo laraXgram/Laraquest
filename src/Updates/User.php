@@ -17,5 +17,6 @@ namespace LaraGram\Laraquest\Updates;
  * @property bool $can_connect_to_business
  * @property bool $has_main_web_app
  * @property bool $has_topics_enabled
+ * @property bool $allows_users_to_create_topics
  **/
 class User { }

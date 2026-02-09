@@ -57,6 +57,8 @@ namespace LaraGram\Laraquest\Updates;
  * @property Location $location
  * @property User[] $new_chat_members
  * @property User $left_chat_member
+ * @property ChatOwnerLeft $chat_owner_left
+ * @property ChatOwnerChanged $chat_owner_changed
  * @property string $new_chat_title
  * @property PhotoSize[] $new_chat_photo
  * @property true $delete_chat_photo

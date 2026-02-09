@@ -11,6 +11,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property UniqueGiftSymbol $symbol
  * @property UniqueGiftBackdrop $backdrop
  * @property true $is_premium
+ * @property true $is_burned
  * @property true $is_from_blockchain
  * @property UniqueGiftColors $colors
  * @property Chat $publisher_chat

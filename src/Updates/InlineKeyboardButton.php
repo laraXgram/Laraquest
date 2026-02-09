@@ -4,6 +4,8 @@ namespace LaraGram\Laraquest\Updates;
 
 /**
  * @property string $text
+ * @property string $icon_custom_emoji_id
+ * @property string $style
  * @property string $url
  * @property string $callback_data
  * @property WebAppInfo $web_app

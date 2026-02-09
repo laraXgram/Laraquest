@@ -871,5 +871,20 @@ trait Methode
     {
         return $this->endpoint('getChatGifts', get_defined_vars());
     }
+
+    public function setMyProfilePhoto($photo)
+    {
+        return $this->endpoint('setMyProfilePhoto', get_defined_vars());
+    }
+
+    public function removeMyProfilePhoto()
+    {
+        return $this->endpoint('removeMyProfilePhoto', get_defined_vars());
+    }
+
+    public function getUserProfileAudios($user_id, $offset = null, $limit = null)
+    {
+        return $this->endpoint('getUserProfileAudios', get_defined_vars());
+    }
 }
 

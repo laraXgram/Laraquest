@@ -51,6 +51,7 @@ namespace LaraGram\Laraquest\Updates;
  * @property int $linked_chat_id
  * @property ChatLocation $location
  * @property UserRating $rating
+ * @property Audio $first_profile_audio
  * @property UniqueGiftColors $unique_gift_colors
  * @property int $paid_message_star_count
  **/
