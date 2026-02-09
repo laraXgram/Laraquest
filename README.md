@@ -1,6 +1,5 @@
 # Laraquest
 Sending requests and receiving Telegram updates.
-- Bot API Version `9.3`
 
 ## Other Versions
 - [Laraquest GoLang](https://github.com/laraXgram/Laraquest-Go)
@@ -43,6 +42,7 @@ $bot->sendMessage(123456789, 'hello!');
 ---
 Just use trait Updates in your class!
 #### Updates:
+
 ```php
 use LaraGram\Laraquest\Updates;
 
@@ -56,6 +56,7 @@ $chatID = $bot->message->chat->id;
 ---
 #### Both:
 Just use trait Method and Updates in your class!
+
 ```php
 use LaraGram\Laraquest\Methode;
 use LaraGram\Laraquest\Updates;
