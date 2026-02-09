@@ -1,8 +1,0 @@
-<?php
-
-namespace LaraGram\Laraquest\Updates;
-
-/**
- * @mixin PassportElementErrorDataField|PassportElementErrorFrontSide|PassportElementErrorReverseSide|PassportElementErrorSelfie|PassportElementErrorFile|PassportElementErrorFiles|PassportElementErrorTranslationFile|PassportElementErrorTranslationFiles|PassportElementErrorUnspecified
-**/
-class PassportElementError { }
