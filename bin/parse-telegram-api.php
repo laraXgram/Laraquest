@@ -2,7 +2,7 @@
 
 class TelegramApiParser
 {
-    private string $rawJsonUrl = 'https://raw.githubusercontent.com/laraXgram/telegram-api-data/refs/heads/main/telegram-api.json';
+    private string $rawJsonUrl = 'https://raw.githubusercontent.com/laraxgram/telegram-api-data/main/telegram-api.json';
     private array $methods = [];
     private array $types = [];
     private string $baseDir;
