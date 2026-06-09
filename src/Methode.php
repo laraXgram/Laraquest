@@ -19,9 +19,19 @@ trait Methode
         ConnectionRegistry::setDefaultConnection($name);
     }
 
+    public static function getDefaultConnection(): ?string
+    {
+        return ConnectionRegistry::getDefaultConnection();
+    }
+
     public static function setDefaultMode(Mode|int $mode): void
     {
         ConnectionRegistry::setDefaultMode($mode);
+    }
+
+    public static function getDefaultMode(): int
+    {
+        return ConnectionRegistry::getDefaultMode();
     }
 
     public function connection(string $name): static
