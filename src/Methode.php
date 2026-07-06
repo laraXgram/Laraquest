@@ -63,6 +63,7 @@ trait Methode
                 'api_server' => config('bot.api_server.endpoint'),
                 'tokens' => config('bot.connections'),
                 'default_con' => config('bot.default'),
+                'default_parameters' => config('laraquest.default_parameters') ?? [],
             ];
         } else {
             $this->resolvedConfig = [
@@ -70,6 +71,7 @@ trait Methode
                 'api_server' => $_ENV['BOT_API_SERVER'],
                 'tokens' => $_ENV['CONNECTIONS'] ?? [],
                 'default_con' => null,
+                'default_parameters' => $_ENV['DEFAULT_PARAMETERS'] ?? [],
             ];
         }
 
@@ -124,6 +126,34 @@ trait Methode
         };
     }
 
+    private function applyDefaultParameters(string $method, array $params): array
+    {
+        $config = $this->resolveConfig()['default_parameters'] ?? [];
+        if (!$config) {
+            return $params;
+        }
+
+        $defaults = [];
+
+        foreach ($config['groups'] ?? [] as $group) {
+            if (in_array($method, $group['methods'] ?? [], true)) {
+                $defaults = array_merge($defaults, $group['defaults'] ?? []);
+            }
+        }
+
+        if (isset($config[$method]) && is_array($config[$method])) {
+            $defaults = array_merge($defaults, $config[$method]);
+        }
+
+        foreach ($defaults as $key => $value) {
+            if (array_key_exists($key, $params) && $params[$key] === null) {
+                $params[$key] = $value;
+            }
+        }
+
+        return $params;
+    }
+
     private function endpoint(string $method, array $params): mixed
     {
         $connection = $this->resolveConnection();
@@ -133,10 +163,11 @@ trait Methode
         $this->perCallConnection = null;
         $this->perCallMode = null;
 
+        $params = $this->applyDefaultParameters($method, $params);
         $params = array_filter($params, fn($v) => $v !== null);
 
         foreach ($params as $key => $value) {
-            if (is_object($value)) {
+            if (is_object($value) || is_array($value)) {
                 $params[$key] = json_encode($value);
             }
         }

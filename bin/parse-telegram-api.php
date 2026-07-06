@@ -7,6 +7,10 @@ class TelegramApiParser
     private array $types = [];
     private string $baseDir;
 
+    private array $textFields = ['text', 'caption'];
+    private array $mediaFields = ['photo', 'audio', 'document', 'video', 'animation', 'voice', 'video_note', 'sticker', 'media', 'thumbnail', 'thumb'];
+    private array $messageIdFields = ['message_id', 'message_ids'];
+
     public function __construct(string $baseDir)
     {
         $this->baseDir = $baseDir;
@@ -61,11 +65,66 @@ class TelegramApiParser
     {
         $phpType = $this->convertToPhpType($type);
 
-        if ($phpType === 'int')   return 'int|string';
-        if ($phpType === 'float') return 'float|string';
-        if (in_array($phpType, ['string', 'bool', 'true'])) return $phpType;
+        $hasUpdateClass = false;
+        $parts = array_map(function (string $part) use (&$hasUpdateClass) {
+            $base = preg_replace('/(\[\])+$/', '', $part);
 
-        return 'array';
+            if ($base !== $part) {
+                if (in_array($base, ['int', 'string', 'bool', 'float', 'true'], true)) {
+                    return $part;
+                }
+
+                $hasUpdateClass = true;
+                return 'Updates\\' . $part;
+            }
+
+            return in_array($part, ['int', 'string', 'bool', 'float', 'true'], true) ? $part : 'array';
+        }, explode('|', $phpType));
+
+        if (in_array('int', $parts, true) || in_array('float', $parts, true)) {
+            $parts[] = 'string';
+        }
+
+        if ($hasUpdateClass) {
+            $parts[] = 'array';
+            $parts[] = 'string';
+        }
+
+        return implode('|', array_unique($parts));
+    }
+
+    private function paramRank(string $name, bool $isEdit, bool $optionalGroup): int
+    {
+        if ($isEdit) {
+            if (in_array($name, $this->textFields, true)) return 0;
+            if ($name === 'chat_id') return 1;
+            if ($optionalGroup && in_array($name, $this->messageIdFields, true)) return 2;
+            if (in_array($name, $this->mediaFields, true)) return 3;
+        } else {
+            if ($name === 'chat_id') return 0;
+            if (in_array($name, $this->textFields, true)) return 1;
+            if (in_array($name, $this->mediaFields, true)) return 2;
+            if ($optionalGroup && in_array($name, $this->messageIdFields, true)) return 3;
+        }
+
+        if ($optionalGroup) {
+            if ($name === 'parse_mode') return 10;
+            if ($name === 'reply_markup') return 11;
+        }
+
+        return 100;
+    }
+
+    private function orderParams(array $params, bool $isEdit, bool $optionalGroup): array
+    {
+        $ranked = [];
+        foreach (array_values($params) as $idx => $param) {
+            $ranked[] = ['param' => $param, 'rank' => $this->paramRank($param['name'], $isEdit, $optionalGroup), 'idx' => $idx];
+        }
+
+        usort($ranked, fn($a, $b) => $a['rank'] <=> $b['rank'] ?: $a['idx'] <=> $b['idx']);
+
+        return array_column($ranked, 'param');
     }
 
     private function escapeDescription(string $description): string
@@ -111,10 +170,12 @@ class TelegramApiParser
 
 namespace LaraGram\Laraquest\Updates;
 
+use LaraGram\Laraquest\Support\UpdateObject;
+
 /**
 {$propertiesStr}
 **/
-class {$className} { }
+class {$className} extends UpdateObject { }
 
 PHP;
     }
@@ -134,6 +195,8 @@ PHP;
 
 namespace LaraGram\Laraquest;
 
+use LaraGram\Laraquest\Updates;
+
 trait APIMethods
 {
 PHP . "\n" . implode("\n\n", $methods) . "\n}\n";
@@ -148,18 +211,14 @@ PHP . "\n" . implode("\n\n", $methods) . "\n}\n";
         $methodName  = $method['name'];
         $description = $this->escapeDescription($method['description']);
 
+        $isEdit   = str_starts_with($methodName, 'edit');
         $required = array_filter($method['parameters'] ?? [], fn($p) => !empty($p['required']));
         $optional = array_filter($method['parameters'] ?? [], fn($p) =>  empty($p['required']));
 
-        $priority = ['chat_id', 'message_id', 'parse_mode', 'reply_markup'];
-        $prioritized = [];
-        foreach ($priority as $key) {
-            foreach ($optional as $k => $p) {
-                if ($p['name'] === $key) { $prioritized[] = $p; unset($optional[$k]); break; }
-            }
-        }
-
-        $ordered   = array_merge(array_values($required), $prioritized, array_values($optional));
+        $ordered   = array_merge(
+            $this->orderParams($required, $isEdit, false),
+            $this->orderParams($optional, $isEdit, true)
+        );
         $params    = [];
         $docParams = [];
 
