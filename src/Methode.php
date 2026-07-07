@@ -59,7 +59,7 @@ trait Methode
 
         if (class_exists(\LaraGram\Config\Repository::class)) {
             $this->resolvedConfig = [
-                'update_type' => config('laraquest.update_type'),
+                'default_mode' => config('laraquest.default_mode'),
                 'api_server' => config('bot.api_server.endpoint'),
                 'tokens' => config('bot.connections'),
                 'default_con' => config('bot.default'),
@@ -67,7 +67,7 @@ trait Methode
             ];
         } else {
             $this->resolvedConfig = [
-                'update_type' => $_ENV['UPDATE_TYPE'],
+                'default_mode' => $_ENV['DEFAULT_MODE'],
                 'api_server' => $_ENV['BOT_API_SERVER'],
                 'tokens' => $_ENV['CONNECTIONS'] ?? [],
                 'default_con' => null,
@@ -120,7 +120,7 @@ trait Methode
             return $mode;
         }
 
-        return match ($this->resolveConfig()['update_type']) {
+        return match ($this->resolveConfig()['default_mode']) {
             'no_response_curl' => Mode::NO_RESPONSE_CURL->value,
             default => Mode::CURL->value,
         };
