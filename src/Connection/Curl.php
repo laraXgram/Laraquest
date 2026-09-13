@@ -61,15 +61,21 @@ class Curl
         $this->post = $post;
         $this->set_option();
         $result = $this->execute();
-        $this->close();
 
         if ($result === false) {
+            $errno = curl_errno($this->curl);
+            $error = curl_error($this->curl);
+
             $result = json_encode([
                 'ok' => false,
-                'code' => curl_errno($this->curl),
-                'message' => curl_error($this->curl)
+                'error_code' => $errno,
+                'description' => $error,
+                'code' => $errno,
+                'message' => $error,
             ]);
         }
+
+        $this->close();
         return json_decode($result, true);
     }
 }
