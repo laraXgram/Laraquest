@@ -1,6 +1,7 @@
 /vendor/
 /src/Updates/
 /src/APIMethods.php
+/src/Schema/api.php
 
 /.idea
 /.vscode

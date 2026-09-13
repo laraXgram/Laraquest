@@ -242,6 +242,86 @@ PHP;
     }
 
     /**
+     * Write the raw API description as a PHP array, so it can be read at runtime
+     * without network access (e.g. to build tool schemas).
+     *
+     * @throws Exception
+     */
+    private function generateSchemaFile(array $data): void
+    {
+        $schemaDir = $this->baseDir . '/src/Schema';
+        if (!is_dir($schemaDir)) mkdir($schemaDir, 0755, true);
+
+        $typeNames = array_column($this->types, 'name');
+
+        $methods = [];
+        foreach ($this->methods as $method) {
+            $methods[$method['name']] = [
+                'description' => $method['description'],
+                'returns'     => $this->extractReturnType($method['description'], $typeNames),
+                'parameters'  => array_map(fn(array $param) => [
+                    'name'        => $param['name'],
+                    'type'        => $param['type'],
+                    'required'    => !empty($param['required']),
+                    'description' => $param['description'],
+                ], array_values($method['parameters'] ?? [])),
+            ];
+        }
+
+        $types = [];
+        foreach ($this->types as $type) {
+            $types[$type['name']] = [
+                'description' => $type['description'],
+                'fields'      => array_map(fn(array $field) => [
+                    'name'        => $field['name'],
+                    'type'        => $field['type'],
+                    'required'    => $field['name'] === '__union__' || !str_starts_with(trim($field['description']), 'Optional.'),
+                    'description' => $field['description'],
+                ], array_values($type['fields'] ?? [])),
+            ];
+        }
+
+        $schema = [
+            'version'    => $data['version'] ?? null,
+            'scraped_at' => $data['scraped_at'] ?? null,
+            'methods'    => $methods,
+            'types'      => $types,
+        ];
+
+        $content = "<?php\n\nreturn " . var_export($schema, true) . ";\n";
+
+        if (!file_put_contents($schemaDir . '/api.php', $content)) {
+            throw new Exception("Error writing Schema/api.php");
+        }
+    }
+
+    /**
+     * Extract the return type from a method description, e.g. "Message",
+     * "Array of Update" or "Message|True".
+     */
+    private function extractReturnType(string $description, array $typeNames): ?string
+    {
+        $known = array_flip(array_merge($typeNames, ['True', 'Integer', 'String', 'Boolean']));
+        $found = [];
+
+        foreach (preg_split('/(?<=[.!?])\s+/', $description) as $sentence) {
+            if (!preg_match('/\breturn(s|ed)?\b/i', $sentence)) continue;
+
+            preg_match_all('/\b(Array of )?([A-Z][A-Za-z]+)\b/', $sentence, $matches, PREG_SET_ORDER);
+
+            foreach ($matches as $match) {
+                if (!isset($known[$match[2]])) continue;
+
+                $found[] = $match[1] !== '' ? 'Array of ' . $match[2] : $match[2];
+            }
+        }
+
+        $found = array_values(array_unique($found));
+
+        return $found === [] ? null : implode('|', $found);
+    }
+
+    /**
      * @throws Exception
      */
     public function run(): void
@@ -257,6 +337,9 @@ PHP;
 
         echo "Generating APIMethods trait..." . PHP_EOL;
         $this->generateApiMethodsTrait();
+
+        echo "Generating API schema..." . PHP_EOL;
+        $this->generateSchemaFile($data);
 
         echo "Done." . PHP_EOL;
     }
