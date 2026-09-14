@@ -167,6 +167,10 @@ trait Methode
         $params = array_filter($params, fn($v) => $v !== null);
 
         foreach ($params as $key => $value) {
+            if ($value instanceof \CURLFile || $value instanceof \CURLStringFile) {
+                continue;
+            }
+
             if (is_object($value) || is_array($value)) {
                 $params[$key] = json_encode($value);
             }
