@@ -5,6 +5,7 @@ class TelegramApiParser
     private string $rawJsonUrl = 'https://raw.githubusercontent.com/laraxgram/telegram-api-data/main/telegram-api.json';
     private array $methods = [];
     private array $types = [];
+    private ?array $typeNames = null;
     private string $baseDir;
 
     private array $textFields = ['text', 'caption'];
@@ -61,12 +62,13 @@ class TelegramApiParser
         return ['Integer' => 'int', 'String' => 'string', 'Boolean' => 'bool', 'Float' => 'float', 'True' => 'true'][$type] ?? $type;
     }
 
-    private function convertParameterType(string $type): string
+    private function convertParameterType(string $type, bool $namespaced = true): string
     {
         $phpType = $this->convertToPhpType($type);
+        $prefix = $namespaced ? 'Updates\\' : '';
 
         $hasUpdateClass = false;
-        $parts = array_map(function (string $part) use (&$hasUpdateClass) {
+        $parts = array_map(function (string $part) use (&$hasUpdateClass, $prefix) {
             $base = preg_replace('/(\[\])+$/', '', $part);
 
             if ($base !== $part) {
@@ -75,7 +77,7 @@ class TelegramApiParser
                 }
 
                 $hasUpdateClass = true;
-                return 'Updates\\' . $part;
+                return $prefix . $part;
             }
 
             return in_array($part, ['int', 'string', 'bool', 'float', 'true'], true) ? $part : 'array';
@@ -165,6 +167,10 @@ class TelegramApiParser
             $propertiesStr = implode("\n", $lines);
         }
 
+        $body = $unionField
+            ? $this->generateVariadicInit($className)
+            : $this->generateFieldsConstant($type).$this->generateInit($type);
+
         return <<<PHP
 <?php
 
@@ -175,9 +181,208 @@ use LaraGram\Laraquest\Support\UpdateObject;
 /**
 {$propertiesStr}
 **/
-class {$className} extends UpdateObject { }
+class {$className} extends UpdateObject
+{
+{$body}}
 
 PHP;
+    }
+
+    /**
+     * Build the map of the fields that are objects of their own, so they can
+     * be read as objects instead of arrays.
+     */
+    private function generateFieldsConstant(array $type): string
+    {
+        $entries = [];
+
+        foreach ($type['fields'] as $field) {
+            $mapped = $this->fieldObjectType($field['type']);
+
+            if ($mapped !== null) {
+                $entries[] = "        '{$field['name']}' => {$mapped},";
+            }
+        }
+
+        if ($entries === []) {
+            return '';
+        }
+
+        $entriesStr = implode("\n", $entries);
+
+        return <<<PHP
+    /**
+     * The type of each field that is an object of its own.
+     *
+     * @var array<string, class-string|array>
+     */
+    protected const FIELDS = [
+{$entriesStr}
+    ];
+
+
+PHP;
+    }
+
+    /**
+     * Get the class, or list of classes, a field hydrates into.
+     */
+    private function fieldObjectType(string $type): ?string
+    {
+        $depth = 0;
+        $base = trim($type);
+
+        while (preg_match('/^Array of (.+)$/i', $base, $matches)) {
+            $depth++;
+            $base = trim($matches[1]);
+        }
+
+        if (! $this->isTypeName($base)) {
+            return null;
+        }
+
+        $mapped = $base.'::class';
+
+        for ($i = 0; $i < $depth; $i++) {
+            $mapped = '['.$mapped.']';
+        }
+
+        return $mapped;
+    }
+
+    /**
+     * Determine whether the given API type is an object described by the API.
+     */
+    private function isTypeName(string $type): bool
+    {
+        $this->typeNames ??= array_flip(array_column($this->types, 'name'));
+
+        return isset($this->typeNames[$type]);
+    }
+
+    /**
+     * Build the init() of a union type, which has no fields of its own.
+     */
+    private function generateVariadicInit(string $className): string
+    {
+        return <<<PHP
+    /**
+     * Build a new {$className} from the fields of the type it stands for.
+     *
+     * @param  mixed  ...\$fields
+     * @return static
+     */
+    public static function init(mixed ...\$fields): static
+    {
+        return static::make(\$fields);
+    }
+
+PHP;
+    }
+
+    /**
+     * Build the init() of a type, with one parameter per field so an editor
+     * can list and describe them.
+     */
+    private function generateInit(array $type): string
+    {
+        $className = $type['name'];
+        $parameters = [];
+        $docs = [];
+
+        foreach ($type['fields'] as $field) {
+            $native = $this->initParameterType($field['type']);
+            $docType = $this->initDocType($field['type']);
+
+            $parameters[] = '        '.($native ? $native.' ' : '')."\${$field['name']} = null,";
+            $docs[] = "     * @param  {$docType}  \${$field['name']}  {$this->escapeDescription($field['description'])}";
+        }
+
+        if ($parameters === []) {
+            return $this->generateVariadicInit($className);
+        }
+
+        $parametersStr = implode("\n", $parameters);
+        $docsStr = implode("\n", $docs);
+
+        return <<<PHP
+    /**
+     * Build a new {$className}.
+     *
+{$docsStr}
+     * @return static
+     */
+    public static function init(
+{$parametersStr}
+    ): static {
+        return static::make(get_defined_vars());
+    }
+
+PHP;
+    }
+
+    /**
+     * Describe an init() parameter for the editor: the type the API documents,
+     * plus the shapes the parameter also accepts.
+     */
+    private function initDocType(string $type): string
+    {
+        $parts = [];
+
+        foreach (explode('|', $this->convertToPhpType($type)) as $part) {
+            $base = preg_replace('/(\[\])+$/', '', $part);
+
+            if (in_array($base, ['int', 'string', 'bool', 'float', 'true'], true)) {
+                $parts[] = $base === 'true' ? 'bool' : $part;
+
+                if ($base === 'int') {
+                    $parts[] = 'string';
+                }
+
+                continue;
+            }
+
+            $parts[] = $part;
+            $parts[] = 'array';
+        }
+
+        $parts[] = 'null';
+
+        return implode('|', array_unique($parts));
+    }
+
+    /**
+     * Get the native type of an init() parameter, or null when the field holds
+     * an object and should stay open to whatever the caller has at hand.
+     */
+    private function initParameterType(string $type): ?string
+    {
+        $native = [];
+
+        foreach (explode('|', $this->convertToPhpType($type)) as $part) {
+            if (str_ends_with($part, '[]')) {
+                $native[] = 'array';
+
+                continue;
+            }
+
+            match ($part) {
+                'int' => array_push($native, 'int', 'string'),
+                'float' => array_push($native, 'float', 'int'),
+                'string' => $native[] = 'string',
+                'bool', 'true' => $native[] = 'bool',
+                default => $native[] = '?',
+            };
+        }
+
+        if (in_array('?', $native, true)) {
+            return null;
+        }
+
+        $native = array_values(array_unique($native));
+        $native[] = 'null';
+
+        return implode('|', $native);
     }
 
     /**
@@ -229,16 +434,66 @@ PHP . "\n" . implode("\n\n", $methods) . "\n}\n";
 
         $paramsStr    = implode(', ', $params);
         $docParamsStr = $docParams ? "\n" . implode("\n", $docParams) : '';
+        $returnDoc    = $this->returnDoc($method);
 
         return <<<PHP
     /**
      * {$description}{$docParamsStr}
+     * @return {$returnDoc}
+     *
+     * @throws \LaraGram\Laraquest\Exceptions\TelegramApiException
      */
-    public function {$methodName}({$paramsStr})
+    public function {$methodName}({$paramsStr}): Response
     {
         return \$this->endpoint('{$methodName}', get_defined_vars());
     }
 PHP;
+    }
+
+    /**
+     * Describe the response of a method as an array shape, so an editor knows
+     * what comes back and what its "result" holds.
+     */
+    private function returnDoc(array $method): string
+    {
+        $returns = $this->extractReturnType(
+            $method['description'], array_column($this->types, 'name')
+        );
+
+        $types = $returns === null ? ['mixed'] : array_map(
+            fn (string $type) => $this->returnResultType($type), explode('|', $returns)
+        );
+
+        $result = implode('|', $types);
+        $shape = "array{ok: bool, result: {$result}, description?: string, error_code?: int, parameters?: array}";
+
+        // The response reads as the object the call returned, as the array
+        // Telegram sent, and as the response object itself - so every one of
+        // them is offered to the editor.
+        $objects = array_values(array_filter(
+            $types, fn (string $type) => str_starts_with($type, 'Updates\\')
+        ));
+
+        return implode('|', array_merge(['Response'], $objects, [$shape]));
+    }
+
+    /**
+     * Map one documented return type onto the type of the "result" field.
+     */
+    private function returnResultType(string $type): string
+    {
+        if (preg_match('/^Array of (.+)$/i', trim($type), $matches)) {
+            return $this->returnResultType(trim($matches[1])).'[]';
+        }
+
+        return match (trim($type)) {
+            'True' => 'true',
+            'Integer' => 'int',
+            'String' => 'string',
+            'Boolean' => 'bool',
+            'Float' => 'float',
+            default => 'Updates\\'.trim($type),
+        };
     }
 
     /**
@@ -292,6 +547,15 @@ PHP;
 
         if (!file_put_contents($schemaDir . '/api.php', $content)) {
             throw new Exception("Error writing Schema/api.php");
+        }
+
+        $returns = array_map(fn (array $method) => $method['returns'], $methods);
+
+        $content = "<?php\n\n// What every Bot API method returns, as the API describes it.\n\nreturn "
+            . var_export($returns, true) . ";\n";
+
+        if (!file_put_contents($schemaDir . '/returns.php', $content)) {
+            throw new Exception("Error writing Schema/returns.php");
         }
     }
 

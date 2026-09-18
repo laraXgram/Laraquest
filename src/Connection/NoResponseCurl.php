@@ -50,15 +50,17 @@ class NoResponseCurl
         pclose($this->handle);
     }
 
-    public function endpoint(string $methode, array $content, bool $post = true): bool|string
+    public function endpoint(string $methode, array $content, bool $post = true): array
     {
         $this->set_url($methode);
         $this->content = $content;
         $this->post = $post;
         $this->set_option();
-        $result = $this->execute();
+        $this->execute();
         $this->close();
 
-        return $result;
+        // The call is fired and forgotten, so there is nothing to report back
+        // beyond the fact that it was dispatched.
+        return ['ok' => true, 'result' => true];
     }
 }

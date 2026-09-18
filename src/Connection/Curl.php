@@ -53,7 +53,7 @@ class Curl
         curl_close($this->curl);
     }
 
-    public function endpoint(string $methode, array $content, bool $post = true): bool|array
+    public function endpoint(string $methode, array $content, bool $post = true): array
     {
         $this->init();
         $this->set_url($methode);
@@ -72,11 +72,27 @@ class Curl
                 'description' => $error,
                 'code' => $errno,
                 'message' => $error,
+                'network' => true,
             ]);
         }
 
         $this->close();
-        return json_decode($result, true);
+
+        $decoded = json_decode($result, true);
+
+        // A response that is not JSON at all (a proxy error page, a truncated
+        // body) still has to reach the caller in the shape of a failure.
+        if (! is_array($decoded)) {
+            return [
+                'ok' => false,
+                'error_code' => 0,
+                'description' => 'Malformed response from the Bot API server.',
+                'network' => true,
+                'body' => is_string($result) ? $result : null,
+            ];
+        }
+
+        return $decoded;
     }
 }
 

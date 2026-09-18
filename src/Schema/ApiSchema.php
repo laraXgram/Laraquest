@@ -8,6 +8,8 @@ class ApiSchema
 {
     private static ?array $schema = null;
 
+    private static ?array $returns = null;
+
     /**
      * Get the path of the generated schema file.
      */
@@ -64,6 +66,32 @@ class ApiSchema
     public static function method(string $name): ?array
     {
         return static::methods()[$name] ?? null;
+    }
+
+    /**
+     * Get what a method returns, as the API describes it, e.g. "Message" or
+     * "Array of Update".
+     *
+     * The answer comes from a small map of its own, so reading it never loads
+     * the whole schema - a response resolves its type on every call.
+     */
+    public static function returns(string $method): ?string
+    {
+        self::$returns ??= is_file(static::returnsPath()) ? require static::returnsPath() : [];
+
+        if (array_key_exists($method, self::$returns)) {
+            return self::$returns[$method];
+        }
+
+        return static::exists() ? (static::method($method)['returns'] ?? null) : null;
+    }
+
+    /**
+     * Get the path of the generated map of method return types.
+     */
+    public static function returnsPath(): string
+    {
+        return __DIR__ . '/returns.php';
     }
 
     /**

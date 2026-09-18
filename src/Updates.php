@@ -17,6 +17,27 @@ trait Updates
     private int $polling_limit;
     private array|null $polling_allowed_updates;
 
+    /**
+     * The decoded update of the current request, once it has been read.
+     *
+     * @var object|null
+     */
+    private ?object $decoded_update = null;
+
+    /**
+     * Whether the update of the current request has already been read.
+     *
+     * @var bool
+     */
+    private bool $decoded_update_read = false;
+
+    /**
+     * The update of the current request, as an object with typed fields.
+     *
+     * @var \LaraGram\Laraquest\Updates\Update|null
+     */
+    private ?Update $typed_update = null;
+
     public function __construct()
     {
         $getConfigValue = function ($key, $default, $file) {
@@ -32,20 +53,42 @@ trait Updates
         $allowed_updates = $getConfigValue('allow_updates', ["*"], 'laraquest.polling');
         $this->polling_allowed_updates = $allowed_updates === ["*"] ? null : $allowed_updates;
     }
+    /**
+     * Read a field of the incoming update.
+     *
+     * @param  string  $name
+     * @return mixed
+     */
     public function __get($name)
     {
-        global $argv;
-        global $data;
-        global $swoole;
-        $update = match ($this->update_type){
-            'sync' => json_decode(file_get_contents('php://input')),
-            'global' => json_decode($argv[1] ?? ''),
-            'openswoole', 'swoole' => $swoole,
-            'polling' => $data,
-            default => throw new InvalidGetUpdateType("Unknown get update type")
-        };
+        return $this->getData()?->{$name} ?? null;
+    }
 
-        return ($update->{$name}) ?? null;
+    /**
+     * Determine whether the incoming update carries the given field.
+     *
+     * @param  string  $name
+     * @return bool
+     */
+    public function __isset($name): bool
+    {
+        return isset($this->getData()?->{$name});
+    }
+
+    /**
+     * Get the incoming update as an object with typed, walkable fields.
+     *
+     * @return \LaraGram\Laraquest\Updates\Update|null
+     */
+    public function update(): ?Update
+    {
+        $data = $this->getData();
+
+        if ($data === null) {
+            return null;
+        }
+
+        return $this->typed_update ??= Update::from($data);
     }
 
     public static function polling(callable $callback): void
@@ -66,28 +109,70 @@ trait Updates
                     $lastUpdateId = $update['update_id'];
                     $data = json_decode(json_encode($update));
 
-                    $callback($polling);
+                    $polling->forgetUpdate();
+
+                    try {
+                        $callback($polling);
+                    } catch (\Throwable $exception) {
+                        // One update that fails must not end the loop.
+                        file_put_contents('laraquest.log', $exception->getMessage() . PHP_EOL, FILE_APPEND);
+                    }
                 }
 
-                sleep($polling->polling_sleep_time);
+                usleep((int) ($polling->polling_sleep_time * 1_000_000));
             }
-        } catch (\Exception $exception){
+        } catch (\Throwable $exception){
             file_put_contents('laraquest.log', $exception->getMessage() . PHP_EOL, FILE_APPEND);
         }
     }
 
-    public function getData()
+    /**
+     * Get the raw update of the current request.
+     *
+     * @return object|null
+     */
+    public function getData(): ?object
     {
         global $argv;
         global $data;
         global $swoole;
-        return match ($this->update_type){
-            'sync' => json_decode(file_get_contents('php://input')),
+
+        $cacheable = in_array($this->update_type, ['sync', 'global'], true);
+
+        if ($cacheable && $this->decoded_update_read) {
+            return $this->decoded_update;
+        }
+
+        $update = match ($this->update_type){
+            'sync' => json_decode((string) file_get_contents('php://input')),
             'global' => json_decode($argv[1] ?? ''),
             'openswoole', 'swoole' => $swoole,
             'polling' => $data,
             default => throw new InvalidGetUpdateType("Unknown get update type")
         };
+
+        $update = is_object($update) ? $update : null;
+
+        if ($cacheable) {
+            $this->decoded_update = $update;
+            $this->decoded_update_read = true;
+        } else {
+            $this->typed_update = null;
+        }
+
+        return $update;
+    }
+
+    /**
+     * Forget the update that was read, so the next read starts over.
+     *
+     * @return void
+     */
+    public function forgetUpdate(): void
+    {
+        $this->decoded_update = null;
+        $this->decoded_update_read = false;
+        $this->typed_update = null;
     }
 
     /**

@@ -4,6 +4,7 @@ namespace LaraGram\Laraquest;
 
 use LaraGram\Laraquest\Connection\Curl;
 use LaraGram\Laraquest\Connection\NoResponseCurl;
+use LaraGram\Laraquest\Exceptions\TelegramApiException;
 
 trait Methode
 {
@@ -11,8 +12,16 @@ trait Methode
 
     private ?string $perCallConnection = null;
     private ?int $perCallMode = null;
+    private ?bool $perCallThrow = null;
 
     private ?array $resolvedConfig = null;
+
+    /**
+     * Whether failed calls throw by default, when nothing else decides.
+     *
+     * @var bool|null
+     */
+    private static ?bool $throwByDefault = null;
 
     public static function setDefaultConnection(string $name): void
     {
@@ -46,6 +55,43 @@ trait Methode
         return $this;
     }
 
+    /**
+     * Turn a failed response of the next call into an exception.
+     *
+     * The exception is the one that matches the failure, so a caller may catch
+     * exactly what it knows how to handle.
+     */
+    public function throw(bool $throw = true): static
+    {
+        $this->perCallThrow = $throw;
+        return $this;
+    }
+
+    /**
+     * Let the next call return its failed response instead of throwing.
+     */
+    public function silent(): static
+    {
+        $this->perCallThrow = false;
+        return $this;
+    }
+
+    /**
+     * Make every failed call throw, unless it asks not to with silent().
+     */
+    public static function throwOnErrors(bool $throw = true): void
+    {
+        self::$throwByDefault = $throw;
+    }
+
+    /**
+     * Stop failed calls from throwing by default.
+     */
+    public static function returnErrors(): void
+    {
+        self::$throwByDefault = false;
+    }
+
     public function getConnection(): string
     {
         return $this->resolveConnection();
@@ -64,6 +110,7 @@ trait Methode
                 'tokens' => config('bot.connections'),
                 'default_con' => config('bot.default'),
                 'default_parameters' => config('laraquest.default_parameters') ?? [],
+                'throw_exceptions' => config('laraquest.throw_exceptions') ?? false,
             ];
         } else {
             $this->resolvedConfig = [
@@ -72,6 +119,7 @@ trait Methode
                 'tokens' => $_ENV['CONNECTIONS'] ?? [],
                 'default_con' => null,
                 'default_parameters' => $_ENV['DEFAULT_PARAMETERS'] ?? [],
+                'throw_exceptions' => filter_var($_ENV['THROW_EXCEPTIONS'] ?? false, FILTER_VALIDATE_BOOL),
             ];
         }
 
@@ -154,14 +202,25 @@ trait Methode
         return $params;
     }
 
-    private function endpoint(string $method, array $params): mixed
+    /**
+     * Call a Bot API method and get its response.
+     *
+     * @param  string  $method
+     * @param  array<string, mixed>  $params
+     * @return \LaraGram\Laraquest\Response
+     *
+     * @throws \LaraGram\Laraquest\Exceptions\TelegramApiException
+     */
+    private function endpoint(string $method, array $params): Response
     {
         $connection = $this->resolveConnection();
         $mode = $this->resolveMode();
+        $throw = $this->resolveThrow();
 
         // reset per-call overrides
         $this->perCallConnection = null;
         $this->perCallMode = null;
+        $this->perCallThrow = null;
 
         $params = $this->applyDefaultParameters($method, $params);
         $params = array_filter($params, fn($v) => $v !== null);
@@ -179,9 +238,31 @@ trait Methode
         $token = $this->resolveToken($connection);
         $apiServer = $this->resolveConfig()['api_server'];
 
-        return match ($mode) {
+        $response = match ($mode) {
             Mode::NO_RESPONSE_CURL->value => (new NoResponseCurl($token, $apiServer))->endpoint($method, $params),
             default => (new Curl($token, $apiServer))->endpoint($method, $params),
         };
+
+        if ($throw && ($response['ok'] ?? true) === false) {
+            throw TelegramApiException::create($method, $params, $response);
+        }
+
+        return Response::make($response, $method, $params);
+    }
+
+    /**
+     * Determine whether a failed response should be thrown.
+     */
+    private function resolveThrow(): bool
+    {
+        if ($this->perCallThrow !== null) {
+            return $this->perCallThrow;
+        }
+
+        if (self::$throwByDefault !== null) {
+            return self::$throwByDefault;
+        }
+
+        return (bool) ($this->resolveConfig()['throw_exceptions'] ?? false);
     }
 }
