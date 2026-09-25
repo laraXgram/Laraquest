@@ -11,6 +11,7 @@ trait Methode
     use APIMethods;
 
     private ?string $perCallConnection = null;
+    private ?string $boundConnection = null;
     private ?int $perCallMode = null;
     private ?bool $perCallThrow = null;
 
@@ -47,6 +48,28 @@ trait Methode
     {
         $this->perCallConnection = $name;
         return $this;
+    }
+
+    /**
+     * Bind this instance to a connection for every following call.
+     *
+     * Unlike connection(), which only affects the next call, the binding lasts
+     * until it is changed and wins over the process-wide default connection,
+     * so each instance can serve its own bot without touching shared state.
+     * Passing null (or 'auto') removes the binding.
+     */
+    public function useConnection(?string $name): static
+    {
+        $this->boundConnection = $this->concreteConnection($name);
+        return $this;
+    }
+
+    /**
+     * Get the connection this instance is bound to, if any.
+     */
+    public function getBoundConnection(): ?string
+    {
+        return $this->boundConnection;
     }
 
     public function mode(Mode|int $mode): static
@@ -128,22 +151,22 @@ trait Methode
 
     private function resolveConnection(): string
     {
-        $perCall = $this->perCallConnection !== 'auto'
-            ? $this->perCallConnection
-            : null;
-
-        $connection = $perCall
-            ?? ConnectionRegistry::getDefaultConnection()
-            ?? $this->resolveConfig()['default_con']
-            ?? throw new \RuntimeException("No connection configured.");
-
-        if ($connection === 'auto') {
-            throw new \RuntimeException(
-                "Connection is 'auto' but setDefaultConnection() has not been called yet."
+        return $this->concreteConnection($this->perCallConnection)
+            ?? $this->boundConnection
+            ?? $this->concreteConnection(ConnectionRegistry::getDefaultConnection())
+            ?? $this->concreteConnection($this->resolveConfig()['default_con'])
+            ?? throw new \RuntimeException(
+                "No bot connection could be resolved. When the default connection is 'auto' it is detected "
+                ."from the incoming update; otherwise pick one with connection() or useConnection()."
             );
-        }
+    }
 
-        return $connection;
+    /**
+     * Normalize a connection name, treating blank and 'auto' as "not decided".
+     */
+    private function concreteConnection(?string $name): ?string
+    {
+        return $name === null || $name === '' || $name === 'auto' ? null : $name;
     }
 
     private function resolveToken(string $connection): string
