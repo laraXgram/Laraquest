@@ -136,6 +136,18 @@ class Response implements ArrayAccess, Countable, IteratorAggregate, JsonSeriali
     }
 
     /**
+     * Get the error code Telegram sent back, if the call failed.
+     *
+     * Alias of errorCode(), named after the field Telegram sends.
+     *
+     * @return int|null
+     */
+    public function error_code(): ?int
+    {
+        return $this->errorCode();
+    }
+
+    /**
      * Get the description Telegram sent back, if the call failed.
      *
      * @return string|null
@@ -169,6 +181,18 @@ class Response implements ArrayAccess, Countable, IteratorAggregate, JsonSeriali
     }
 
     /**
+     * Get the number of seconds to wait before retrying, when Telegram said so.
+     *
+     * Alias of retryAfter(), named after the field Telegram sends.
+     *
+     * @return int|null
+     */
+    public function retry_after(): ?int
+    {
+        return $this->retryAfter();
+    }
+
+    /**
      * Get the chat the conversation moved to, when Telegram said so.
      *
      * @return int|null
@@ -178,6 +202,18 @@ class Response implements ArrayAccess, Countable, IteratorAggregate, JsonSeriali
         $chatId = $this->parameters()['migrate_to_chat_id'] ?? null;
 
         return $chatId === null ? null : (int) $chatId;
+    }
+
+    /**
+     * Get the chat the conversation moved to, when Telegram said so.
+     *
+     * Alias of migrateToChatId(), named after the field Telegram sends.
+     *
+     * @return int|null
+     */
+    public function migrate_to_chat_id(): ?int
+    {
+        return $this->migrateToChatId();
     }
 
     /**
