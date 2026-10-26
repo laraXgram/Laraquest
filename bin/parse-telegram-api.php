@@ -168,7 +168,7 @@ class TelegramApiParser
         }
 
         $body = $unionField
-            ? $this->generateVariadicInit($className)
+            ? $this->generateFieldsConstant($this->unionType($unionField['type'])).$this->generateVariadicInit($className)
             : $this->generateFieldsConstant($type).$this->generateInit($type);
 
         return <<<PHP
@@ -222,6 +222,27 @@ PHP;
 
 
 PHP;
+    }
+
+    /**
+     * Build a pseudo type carrying the fields of every member of a union, so
+     * the union reads its object fields as objects too (the first member that
+     * declares a field decides its type).
+     */
+    private function unionType(string $members): array
+    {
+        $byName = array_column($this->types, null, 'name');
+        $fields = [];
+
+        foreach (preg_split('/\s*(?:\||\bor\b|,)\s*/', $members) as $member) {
+            foreach ($byName[trim($member)]['fields'] ?? [] as $field) {
+                if ($field['name'] !== '__union__' && ! isset($fields[$field['name']])) {
+                    $fields[$field['name']] = $field;
+                }
+            }
+        }
+
+        return ['fields' => array_values($fields)];
     }
 
     /**

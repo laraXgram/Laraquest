@@ -36,6 +36,13 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     private array $__hydrated = [];
 
     /**
+     * Whether this object stands in for a field the payload does not carry.
+     *
+     * @var bool
+     */
+    private bool $__missing = false;
+
+    /**
      * @param  mixed  ...$fields
      */
     final public function __construct(mixed ...$fields)
@@ -52,6 +59,20 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     public static function make(array $fields): static
     {
         return new static(...array_filter($fields, static fn ($value) => $value !== null));
+    }
+
+    /**
+     * Build the empty stand-in of a field the payload does not carry: every
+     * helper works on it, and it is encoded as null like the missing field.
+     *
+     * @return static
+     */
+    public static function missing(): static
+    {
+        $object = new static;
+        $object->__missing = true;
+
+        return $object;
     }
 
     /**
@@ -73,6 +94,11 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
 
         if (is_string($data)) {
             $data = json_decode($data, true) ?? [];
+        }
+
+        // A decoded payload keeps its nested objects, so an empty one stays {}.
+        if ($data instanceof \stdClass) {
+            $data = get_object_vars($data);
         }
 
         if (is_object($data)) {
@@ -102,6 +128,10 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     /**
      * Get a field, as an object when the field is one.
      *
+     * A missing object field is an empty object of its type, so helper calls
+     * such as `$message->chat->isEmpty()` or `->has('id')` work on any update;
+     * `isset()`, `empty()`, `??` and filled() still see the field as missing.
+     *
      * @param  string  $name
      * @return mixed
      */
@@ -113,8 +143,12 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
 
         $value = $this->__fields[$name] ?? null;
 
-        if ($value === null || ! isset(static::FIELDS[$name])) {
+        if (! isset(static::FIELDS[$name])) {
             return $value;
+        }
+
+        if ($value === null) {
+            return is_array(static::FIELDS[$name]) ? null : $this->__hydrated[$name] = static::FIELDS[$name]::missing();
         }
 
         return $this->__hydrated[$name] = $this->hydrate(static::FIELDS[$name], $value);
@@ -137,6 +171,7 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     public function __set(string $name, mixed $value): void
     {
         $this->__fields[$name] = $value;
+        $this->__missing = false;
 
         unset($this->__hydrated[$name]);
     }
@@ -163,7 +198,7 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
 
         foreach (explode('.', $key) as $segment) {
             $value = match (true) {
-                $value instanceof self => $value->{$segment},
+                $value instanceof self => isset($value->{$segment}) ? $value->{$segment} : null,
                 is_array($value) => $value[$segment] ?? null,
                 is_object($value) => $value->{$segment} ?? null,
                 default => null,
@@ -275,10 +310,17 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     }
 
     /**
-     * @return array<string, mixed>
+     * The fields as JSON: a missing field stays null, and an empty object
+     * stays {} rather than [].
+     *
+     * @return mixed
      */
-    public function jsonSerialize(): array
+    public function jsonSerialize(): mixed
     {
+        if ($this->__fields === []) {
+            return $this->__missing ? null : new \stdClass;
+        }
+
         return $this->toArray();
     }
 
@@ -332,7 +374,13 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
      */
     public function getIterator(): Traversable
     {
-        return new ArrayIterator($this->__fields);
+        $fields = [];
+
+        foreach (array_keys($this->__fields) as $name) {
+            $fields[$name] = $this->__get($name);
+        }
+
+        return new ArrayIterator($fields);
     }
 
     /**
@@ -381,7 +429,7 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     private static function normalize(mixed $value): mixed
     {
         if ($value instanceof self) {
-            return $value->toArray();
+            return $value->isEmpty() ? new \stdClass : $value->toArray();
         }
 
         if ($value instanceof JsonSerializable) {
