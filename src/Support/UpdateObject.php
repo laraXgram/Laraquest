@@ -4,6 +4,7 @@ namespace LaraGram\Laraquest\Support;
 
 use ArrayAccess;
 use ArrayIterator;
+use Closure;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
@@ -41,6 +42,13 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
      * @var bool
      */
     private bool $__missing = false;
+
+    /**
+     * The callback that shows a dumped object: (object, "dd"|"dump"|"log").
+     *
+     * @var (\Closure(self, string): mixed)|null
+     */
+    protected static ?Closure $dumper = null;
 
     /**
      * @param  mixed  ...$fields
@@ -231,6 +239,72 @@ abstract class UpdateObject implements ArrayAccess, Countable, IteratorAggregate
     public function isEmpty(): bool
     {
         return $this->__fields === [];
+    }
+
+    /**
+     * Set how dumped objects are shown (LaraGram sends them to the chat).
+     *
+     * @param  (\Closure(self, string): mixed)|null  $callback
+     * @return void
+     */
+    public static function dumpUsing(?Closure $callback): void
+    {
+        static::$dumper = $callback;
+    }
+
+    /**
+     * Show the object, then stop handling the update.
+     *
+     * @return never
+     */
+    public function dd(): never
+    {
+        $this->showDump('dd');
+
+        exit(1);
+    }
+
+    /**
+     * Show the object and carry on.
+     *
+     * @return $this
+     */
+    public function dump(): static
+    {
+        $this->showDump('dump');
+
+        return $this;
+    }
+
+    /**
+     * Write the object to the log and carry on.
+     *
+     * @return $this
+     */
+    public function log(): static
+    {
+        $this->showDump('log');
+
+        return $this;
+    }
+
+    /**
+     * Hand the object to the dumper, or print it when there is none.
+     *
+     * @param  string  $action
+     * @return void
+     */
+    protected function showDump(string $action): void
+    {
+        if (static::$dumper !== null) {
+            (static::$dumper)($this, $action);
+
+            return;
+        }
+
+        $json = json_encode($this, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        $action === 'log' ? error_log($json) : print($json.PHP_EOL);
     }
 
     /**
