@@ -141,9 +141,18 @@ class TelegramApiParser
             mkdir($typesDir, 0755, true);
         }
 
+        $generated = [];
         foreach ($this->types as $type) {
             if (!preg_match('/^[A-Z][a-zA-Z0-9]*$/', $type['name'])) continue;
             file_put_contents($typesDir . '/' . $type['name'] . '.php', $this->generateTypeClass($type));
+            $generated[$type['name'] . '.php'] = true;
+        }
+
+        // types removed or renamed in the API (StoryAreaPosition became AreaPosition) leave no stale class behind
+        foreach (glob($typesDir . '/*.php') ?: [] as $file) {
+            if (!isset($generated[basename($file)])) {
+                unlink($file);
+            }
         }
     }
 
