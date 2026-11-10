@@ -190,7 +190,9 @@ trait Updates
             isset($this->edited_channel_post) => $this->getUpdateMessageSubType($this->edited_channel_post),
             isset($this->business_message) => $this->getUpdateMessageSubType($this->business_message),
             isset($this->edited_business_message) => $this->getUpdateMessageSubType($this->edited_business_message),
+            isset($this->guest_message) => $this->getUpdateMessageSubType($this->guest_message),
             isset($this->business_connection) => 'business_connection',
+            isset($this->managed_bot) => 'managed_bot',
             isset($this->deleted_business_messages) => 'deleted_business_messages',
             isset($this->message_reaction) => 'message_reaction',
             isset($this->message_reaction_count) => 'message_reaction_count',
@@ -207,6 +209,10 @@ trait Updates
             isset($this->chat_join_request) => 'chat_join_request',
             isset($this->chat_boost) => 'chat_boost',
             isset($this->removed_chat_boost) => 'removed_chat_boost',
+            isset($this->subscription) => 'subscription',
+            isset($this->stopped_message_generation) => 'stopped_message_generation',
+            isset($this->widget_query) => 'widget_query',
+            isset($this->shared_widget_query) => 'shared_widget_query',
             default => false
         };
     }
@@ -232,6 +238,7 @@ trait Updates
             isset($message->video_note) => 'video_note',
             isset($message->voice) => 'voice',
             isset($message->checklist) => 'checklist',
+            isset($message->widget) => 'widget',
             isset($message->contact) => 'contact',
             isset($message->dice) => 'dice',
             isset($message->game) => 'game',
@@ -275,6 +282,31 @@ trait Updates
             isset($message->supergroup_chat_created) => 'supergroup_chat_created',
             isset($message->channel_chat_created) => 'channel_chat_created',
             isset($message->message_auto_delete_timer_changed) => 'message_auto_delete_timer_changed',
+            isset($message->migrate_to_chat_id) => 'migrate_to_chat_id',
+            isset($message->migrate_from_chat_id) => 'migrate_from_chat_id',
+            isset($message->connected_website) => 'connected_website',
+            isset($message->web_app_data) => 'web_app_data',
+            isset($message->live_photo) => 'live_photo',
+            isset($message->gift) => 'gift',
+            isset($message->unique_gift) => 'unique_gift',
+            isset($message->gift_upgrade_sent) => 'gift_upgrade_sent',
+            isset($message->rich_message) => 'rich_message',
+            isset($message->write_access_allowed) => 'write_access_allowed',
+            isset($message->poll_option_added) => 'poll_option_added',
+            isset($message->poll_option_deleted) => 'poll_option_deleted',
+            isset($message->suggested_post_approved) => 'suggested_post_approved',
+            isset($message->suggested_post_approval_failed) => 'suggested_post_approval_failed',
+            isset($message->suggested_post_declined) => 'suggested_post_declined',
+            isset($message->suggested_post_paid) => 'suggested_post_paid',
+            isset($message->suggested_post_refunded) => 'suggested_post_refunded',
+            isset($message->managed_bot_created) => 'managed_bot_created',
+            isset($message->chat_owner_left) => 'chat_owner_left',
+            isset($message->chat_owner_changed) => 'chat_owner_changed',
+            isset($message->community_chat_added) => 'community_chat_added',
+            isset($message->community_chat_joined) => 'community_chat_joined',
+            isset($message->community_chat_removed) => 'community_chat_removed',
+            isset($message->ton_wallet_transfer) => 'ton_wallet_transfer',
+            isset($message->paid_messages_waived) => 'paid_messages_waived',
             default => throw new InvalidUpdateType('Unknown message type')
         };
     }
@@ -293,6 +325,7 @@ trait Updates
             isset($this->edited_channel_post->chat->type) => $this->edited_channel_post->chat->type,
             isset($this->business_message->chat->type) => $this->business_message->chat->type,
             isset($this->edited_business_message->chat->type) => $this->edited_business_message->chat->type,
+            isset($this->guest_message->chat->type) => $this->guest_message->chat->type,
             isset($this->deleted_business_messages->chat->type) => $this->deleted_business_messages->chat->type,
             isset($this->message_reaction->chat->type) => $this->message_reaction->chat->type,
             isset($this->message_reaction_count->chat->type) => $this->message_reaction_count->chat->type,
@@ -303,6 +336,8 @@ trait Updates
             isset($this->chat_join_request->chat->type) => $this->chat_join_request->chat->type,
             isset($this->chat_boost->chat->type) => $this->chat_boost->chat->type,
             isset($this->removed_chat_boost->chat->type) => $this->removed_chat_boost->chat->type,
+            isset($this->stopped_message_generation->chat->type) => $this->stopped_message_generation->chat->type,
+            isset($this->widget_query->chat->type) => $this->widget_query->chat->type,
             default => null
         };
     }
@@ -321,6 +356,7 @@ trait Updates
             isset($this->edited_channel_post->reply_to_message),
             isset($this->business_message->reply_to_message),
             isset($this->edited_business_message->reply_to_message),
+            isset($this->guest_message->reply_to_message),
             isset($this->callback_query->message->reply_to_message) => true,
             default => false
         };
