@@ -446,9 +446,21 @@ PHP . "\n" . implode("\n\n", $methods) . "\n}\n";
         $methodName  = $method['name'];
         $description = $this->escapeDescription($method['description']);
 
-        $isEdit   = str_starts_with($methodName, 'edit');
-        $required = array_filter($method['parameters'] ?? [], fn($p) => !empty($p['required']));
-        $optional = array_filter($method['parameters'] ?? [], fn($p) =>  empty($p['required']));
+        $isEdit     = str_starts_with($methodName, 'edit');
+        $parameters = $method['parameters'] ?? [];
+
+        // Since Bot API 10.4, chat_id of the send* methods is optional only so that
+        // ephemeral replies to callback queries can omit it. Keep it as the leading
+        // parameter so existing positional calls (chat_id, text, ...) keep working,
+        // and give it and everything after it a null default: an optional parameter
+        // can't precede a required one in PHP, and callers must be able to omit it.
+        $leadingChatId = !$isEdit
+            && in_array('chat_id', array_column($parameters, 'name'), true)
+            && in_array('ephemeral_message_parameters', array_column($parameters, 'name'), true);
+        $isPositional  = fn($p) => !empty($p['required']) || ($leadingChatId && $p['name'] === 'chat_id');
+
+        $required = array_filter($parameters, $isPositional);
+        $optional = array_filter($parameters, fn($p) => !$isPositional($p));
 
         $ordered   = array_merge(
             $this->orderParams($required, $isEdit, false),
@@ -458,7 +470,7 @@ PHP . "\n" . implode("\n\n", $methods) . "\n}\n";
         $docParams = [];
 
         foreach ($ordered as $param) {
-            $params[]    = !empty($param['required']) ? "\${$param['name']}" : "\${$param['name']} = null";
+            $params[]    = $isPositional($param) && !$leadingChatId ? "\${$param['name']}" : "\${$param['name']} = null";
             $docParams[] = "     * @param {$this->convertParameterType($param['type'])} \${$param['name']} {$this->escapeDescription($param['description'])}";
         }
 
