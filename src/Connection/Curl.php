@@ -50,7 +50,9 @@ class Curl
 
     private function close(): void
     {
-        curl_close($this->curl);
+        if (PHP_VERSION_ID < 80000) {
+            curl_close($this->curl);
+        }
     }
 
     public function endpoint(string $methode, array $content, bool $post = true): array
